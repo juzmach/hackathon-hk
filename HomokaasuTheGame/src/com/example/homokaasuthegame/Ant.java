@@ -22,11 +22,9 @@ public class Ant extends Enemy{
 	    textureAtlas.load();
 	}
 
-	public Ant(float pX, float pY, float pWidth, float pHeight,
-			VertexBufferObjectManager vertexBufferObjectManager) {
-		super(pX, pY, 0, pWidth, pHeight, textureRegion,
-		        vertexBufferObjectManager);
-
+	public Ant(float pX, float pY,
+	        VertexBufferObjectManager vertexBufferObjectManager) {
+		super(pX, pY, 0, 100f, 48f, textureRegion, vertexBufferObjectManager);
 		this.animate(100);
 	}
 }

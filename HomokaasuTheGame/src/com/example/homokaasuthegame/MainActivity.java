@@ -243,7 +243,7 @@ public class MainActivity extends BaseGameActivity {
             MainActivity.mainScene.attachChild(ground);
         }
 
-        {
+        /*{
             Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 15, CAMERA_WIDTH,
                     15, this.mEngine.getVertexBufferObjectManager());
             ground.setColor(new org.andengine.util.color.Color(15, 50, 0));
@@ -251,7 +251,7 @@ public class MainActivity extends BaseGameActivity {
             PhysicsFactory.createBoxBody(physicsWorld, ground,
                     BodyType.StaticBody, WALL_FIX);
             MainActivity.mainScene.attachChild(ground);
-        }
+        }*/
     }
 
 
@@ -264,7 +264,7 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        Ant a = new Ant(10, 10, 100f, 48f, this.getVertexBufferObjectManager());
+        Ant a = new Ant(10, 10, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(a);
 
         new Pie(15f, 14.35f, 453f, 145f,
