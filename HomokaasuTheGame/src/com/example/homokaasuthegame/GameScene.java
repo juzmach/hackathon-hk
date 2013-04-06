@@ -13,10 +13,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class GameScene extends Scene {
-	private World world;
+	
 	private BodyDef bd = new BodyDef();
 	private FixtureDef fd = new FixtureDef();
-	private VertexBufferObjectManager vbom;
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	
 	public GameScene(VertexBufferObjectManager vbom) {

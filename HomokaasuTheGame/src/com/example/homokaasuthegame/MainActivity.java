@@ -1,5 +1,7 @@
 package com.example.homokaasuthegame;
 
+import java.util.LinkedList;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import org.andengine.engine.camera.Camera;
@@ -11,6 +13,7 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -31,6 +34,8 @@ import android.view.KeyEvent;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -38,9 +43,18 @@ public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
     protected static final int CAMERA_HEIGHT = 550;
 
+    
+    
+	
+	//The world
+	static World world;
+	
+	//List of enemies
+	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+    
     BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
-    PhysicsWorld physicsWorld;
+    static PhysicsWorld physicsWorld;
     private BitmapTextureAtlas mFontTexture;
     private Font mFont;
 
@@ -247,4 +261,6 @@ public class MainActivity extends BaseGameActivity {
         //splash.setPosition(coord[0], coord[1]);
         splashScene.attachChild(splash);
     }
+    
+    
 }
