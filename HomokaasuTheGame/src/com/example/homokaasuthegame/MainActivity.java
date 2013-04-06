@@ -15,6 +15,7 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
@@ -31,6 +32,8 @@ import android.view.KeyEvent;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
@@ -260,7 +263,26 @@ public class MainActivity extends BaseGameActivity {
         MainActivity.mainScene.attachChild(bg);
 
         new Enemy(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 453f, 145f,
-                enemyTextureRegion, this.getVertexBufferObjectManager());
+                enemyTextureRegion, this.getVertexBufferObjectManager())
+        	{
+        	@Override
+        	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float touchAreaX,
+        			final float touchAreaY) {
+        		MouseJoint joint = null;
+        		switch (pSceneTouchEvent.getAction()) {
+        		case TouchEvent.ACTION_DOWN:
+        			joint = (MouseJoint) physicsWorld.createJoint(new MouseJointDef());
+        			break;
+        		case TouchEvent.ACTION_MOVE:
+        			this.setPosition(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+        			break;
+        		case TouchEvent.ACTION_UP:
+        			physicsWorld.destroyJoint(joint);
+        			return false;
+        		}
+        		return true;
+        	}
+        };
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
