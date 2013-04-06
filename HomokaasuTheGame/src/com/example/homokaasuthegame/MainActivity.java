@@ -264,15 +264,12 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        /*Enemy e = new Enemy(15, 10, 0, 453f, 145f,
-                enemyTextureRegion, this.getVertexBufferObjectManager());*/
-        //mainScene.registerTouchArea(e);
-
         Ant a = new Ant(10, 10, 100f, 48f, this.getVertexBufferObjectManager());
-
-        /*new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 400, 300,
-        		pieTextureRegion, this.getVertexBufferObjectManager());*/
         mainScene.registerTouchArea(a);
+
+        new Pie(15f, 14.35f, 453f, 145f,
+        		pieTextureRegion, this.getVertexBufferObjectManager());
+
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
