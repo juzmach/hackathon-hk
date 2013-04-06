@@ -33,20 +33,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
 
 public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
     protected static final int CAMERA_HEIGHT = 550;
 
-	//The world
-	static World world;
-
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
-
-	private BitmapTextureAtlas enemyTexture;
 	private ITextureRegion enemyTextureRegion;
 
     BitmapTextureAtlas playerTexture;
@@ -59,7 +53,7 @@ public class MainActivity extends BaseGameActivity {
 
     /* Scenes */
     private Scene splashScene;
-    private Scene mainScene;
+    static public Scene mainScene;
 
     /* Splash screen resources */
     Sprite splashSprite;
@@ -200,11 +194,7 @@ public class MainActivity extends BaseGameActivity {
        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
        // width and height power of 2^x
-       playerTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
-       enemyTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
-       playerTexture.load();
-       enemyTexture.load();
-       enemyTextureRegion = loadTexture("pie.png", 64, 64, 0, 0);
+       enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
        playerTextureRegion = loadTexture("player.png", 64, 64, 0, 0);
     }
 
@@ -279,9 +269,10 @@ public class MainActivity extends BaseGameActivity {
         Body body = PhysicsFactory.createCircleBody(physicsWorld, sPlayer,
                 BodyType.DynamicBody, PLAYER_FIX);
         this.mainScene.attachChild(sPlayer);
-        Enemy n = new Enemy(0, 0, 0, 0, enemyTextureRegion, this.getVertexBufferObjectManager());
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(sPlayer,
                 body, true, false));
+
+        Enemy n = new Enemy(0, 0, 0, 0, enemyTextureRegion, this.getVertexBufferObjectManager());
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
