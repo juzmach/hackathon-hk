@@ -1,5 +1,7 @@
 package com.example.homokaasuthegame;
 
+import java.util.LinkedList;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -20,7 +22,6 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
 
@@ -32,28 +33,25 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
     protected static final int CAMERA_HEIGHT = 550;
 
-<<<<<<< HEAD
-    
-    
-	
 	//The world
 	static World world;
-	
+
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
-    
+
 
 	private BitmapTextureAtlas mBitmapTextureAtlas;
 	private ITextureRegion mFaceTextureRegion;
-	
+
     BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
-    
+
     static PhysicsWorld physicsWorld;
 
     private BitmapTextureAtlas mFontTexture;
@@ -128,7 +126,7 @@ public class MainActivity extends BaseGameActivity {
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
             throws Exception {
         initSplashScene();
-        
+
 
         pOnCreateSceneCallback.onCreateSceneFinished(this.mainScene);
     }
