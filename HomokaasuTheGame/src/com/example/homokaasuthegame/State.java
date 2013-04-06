@@ -11,6 +11,7 @@ public class State {
 	private BodyDef bd = new BodyDef();
 	private FixtureDef fd = new FixtureDef();
 	
+	
 	public void addEnemy() {
 		bd.type = BodyType.DynamicBody;
 		bd.active = true;
