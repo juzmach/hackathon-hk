@@ -20,4 +20,9 @@ public class Enemy extends Entity {
 	public Body getBody() {
 		return body;
 	}
+	
+	@Override
+	protected void onManagedUpdate(final float pSecondsElapsed) {
+		super.onManagedUpdate(pSecondsElapsed);
+	}
 }

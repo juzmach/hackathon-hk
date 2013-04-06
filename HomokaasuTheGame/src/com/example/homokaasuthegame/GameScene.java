@@ -2,7 +2,9 @@ package com.example.homokaasuthegame;
 
 import java.util.LinkedList;
 
+import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
+import org.andengine.opengl.util.GLState;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -27,5 +29,6 @@ public class GameScene extends Scene {
 		
 		Enemy n = new Enemy(world.createBody(bd));
 		n.getBody().createFixture(fd);
+		attachChild(n);
 	}
 }
