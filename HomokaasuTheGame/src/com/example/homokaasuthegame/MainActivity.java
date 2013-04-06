@@ -192,7 +192,7 @@ public class MainActivity extends BaseGameActivity {
 
        // width and height power of 2^x
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
-       enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
+       enemyTextureRegion = loadTexture("ant.png", 500, 500, 0, 0);
        pieTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
     }
 
@@ -262,7 +262,8 @@ public class MainActivity extends BaseGameActivity {
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
-        Enemy e = new Enemy(15, 10, 0, 453f, 145f,
+
+        Enemy e = new Enemy(5, 14.35f, 0, 100f, 39f,
                 enemyTextureRegion, this.getVertexBufferObjectManager());
 
         mainScene.registerTouchArea(e);
