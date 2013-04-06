@@ -13,16 +13,17 @@ public class Fly extends Enemy {
 	private static BodyDef bd;
 	private static FixtureDef fd;
 	private static ITextureRegion textureRegion;
+	
+	static {
+		bd = new BodyDef();
+		fd = new FixtureDef();
+	}
 
 	public Fly(float pX, float pY, float pWidth, float pHeight,
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager vertexBufferObjectManager) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, vertexBufferObjectManager);
 		// TODO Auto-generated constructor stub
-	}
-	
-	public static void init(){
-		
 	}
 
 	

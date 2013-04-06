@@ -266,12 +266,9 @@ public class MainActivity extends BaseGameActivity {
         
         new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 400, 300, 
         		pieTextureRegion, this.getVertexBufferObjectManager());
-        new Enemy(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 453f, 145f,
-<<<<<<< HEAD
-               enemyTextureRegion, this.getVertexBufferObjectManager());
-=======
-                enemyTextureRegion, this.getVertexBufferObjectManager())
-        	{
+        new Enemy(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 453f, 145f, enemyTextureRegion,
+        		this.getVertexBufferObjectManager()) 
+        {
         	@Override
         	public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float touchAreaX,
         			final float touchAreaY) {
@@ -290,8 +287,6 @@ public class MainActivity extends BaseGameActivity {
         		return true;
         	}
         };
-
->>>>>>> daf15ce238d91cb7115c7df77a452ad0d45fceff
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
