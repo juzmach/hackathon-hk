@@ -1,7 +1,5 @@
 package com.example.homokaasuthegame;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -49,8 +47,7 @@ public class MainActivity extends BaseGameActivity {
     private Scene mainScene;
 
     /* Splash screen resources */
-    private BitmapTextureAtlas splashTexture;
-    private ITextureRegion splashTextureRegion;
+    Sprite splashSprite;
 
     private Text text;
 
@@ -88,11 +85,26 @@ public class MainActivity extends BaseGameActivity {
     }
 
     private void loadSplashScreen() {
+        BitmapTextureAtlas splashTexture;
+        ITextureRegion splashTextureRegion;
+
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        splashTexture = new BitmapTextureAtlas(this.getTextureManager(),
-                318, 500, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTexture, this, "player.png", 0, 0);
+        splashTexture = new BitmapTextureAtlas(getTextureManager(), 1024, 550,
+                TextureOptions.DEFAULT);
+        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTexture, this, "kerola.png", 0, 0);
         splashTexture.load();
+
+        splashSprite = new Sprite(splashTextureRegion.getWidth(),
+                splashTextureRegion.getHeight(), splashTextureRegion,
+                mEngine.getVertexBufferObjectManager())
+        {
+            @Override
+            protected void preDraw(GLState pGLState, Camera pCamera)
+            {
+                super.preDraw(pGLState, pCamera);
+                pGLState.enableDither();
+            }
+        };
     }
 
     @Override
@@ -154,7 +166,8 @@ public class MainActivity extends BaseGameActivity {
     private void loadFonts() {
         /* Load the font we are going to use. */
         FontFactory.setAssetBasePath("fonts/");
-        this.mFontTexture = new BitmapTextureAtlas(this.getTextureManager(),
+        this.mFontTexture = new BitmapTextureAtlas(
+                this.getTextureManager(),
                 1024, 1024,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         this.mFont = FontFactory.createFromAsset(
@@ -221,30 +234,9 @@ public class MainActivity extends BaseGameActivity {
 /* Init Splash ****************************************************************/
 
     private void initSplashScene() {
-        splashScene = new Scene();/*
-        Sprite splash = new Sprite(
-                splashTextureRegion.getWidth(),
-                splashTextureRegion.getHeight(),
-                splashTextureRegion,
-                this.mEngine.getVertexBufferObjectManager());*/
+        splashScene = new Scene();
+        splashScene.setBackgroundEnabled(false);
 
-        Sprite splash = new Sprite(splashTextureRegion.getWidth(),
-                splashTextureRegion.getHeight(), splashTextureRegion,
-                mEngine.getVertexBufferObjectManager())
-        {
-            @Override
-            protected void preDraw(GLState pGLState, Camera pCamera)
-            {
-                super.preDraw(pGLState, pCamera);
-                pGLState.enableDither();
-            }
-        };
-        splashScene.setVisible(false);
-
-        splash.setScale(0.5f);
-        splash.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        //float[] coord = splash.getSceneCenterCoordinates();
-        //splash.setPosition(coord[0], coord[1]);
-        splashScene.attachChild(splash);
+        splashScene.attachChild(splashSprite);
     }
 }
