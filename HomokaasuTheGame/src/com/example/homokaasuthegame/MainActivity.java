@@ -224,6 +224,7 @@ public class MainActivity extends BaseGameActivity {
         physicsWorld = new PhysicsWorld(new Vector2(0,
                 SensorManager.GRAVITY_EARTH), false);
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
+        mainScene.setTouchAreaBindingOnActionDownEnabled(true);
 
         createWalls();
     }
@@ -261,11 +262,10 @@ public class MainActivity extends BaseGameActivity {
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
-
-        /*Enemy e = new Enemy(15, 10, 0, 453f, 145f,
+        Enemy e = new Enemy(15, 10, 0, 453f, 145f,
                 enemyTextureRegion, this.getVertexBufferObjectManager());
-        
-        mainScene.registerTouchArea(e);*/
+
+        mainScene.registerTouchArea(e);
 
         new Pie(15, 14.35f, 453, 145,
         		pieTextureRegion, this.getVertexBufferObjectManager());
