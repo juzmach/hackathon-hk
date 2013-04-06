@@ -26,4 +26,5 @@ public class Ant extends Enemy{
 		
 	}
 
+	
 }
