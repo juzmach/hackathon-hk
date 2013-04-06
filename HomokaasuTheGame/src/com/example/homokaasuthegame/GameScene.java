@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.util.GLState;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -15,7 +16,13 @@ public class GameScene extends Scene {
 	private World world;
 	private BodyDef bd = new BodyDef();
 	private FixtureDef fd = new FixtureDef();
+	private VertexBufferObjectManager vbom;
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+	
+	public GameScene(VertexBufferObjectManager vbom) {
+		super();
+		this.vbom = vbom;
+	}
 	
 	public void addEnemy() {
 		bd.type = BodyType.DynamicBody;
@@ -27,8 +34,10 @@ public class GameScene extends Scene {
 		fd.friction = 0.1f;
 		fd.restitution = 0.01f;
 		
-		Enemy n = new Enemy(world.createBody(bd));
-		n.getBody().createFixture(fd);
+		/*Enemy n = new Enemy(world.createBody(bd));
+		n.getBody().createFixture(fd);*/
+		
+		Enemy n = new Enemy(0, 0, null, this.vbom);
 		attachChild(n);
 	}
 }
