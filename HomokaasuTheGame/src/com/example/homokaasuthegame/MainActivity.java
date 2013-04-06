@@ -205,11 +205,11 @@ public class MainActivity extends BaseGameActivity {
      * @param pTextureY
      * @return ITextureRegion
      */
-    private ITextureRegion loadTexture(String name, int pTextureX, int pTextureY) {
+    private ITextureRegion loadTexture(String name, int width, int height, int pTextureX, int pTextureY) {
         BitmapTextureAtlas texture;
         ITextureRegion textureRegion;
 
-        texture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
+        texture = new BitmapTextureAtlas(getTextureManager(), width, height);
         textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 texture, this, name, pTextureX, pTextureY);
 
