@@ -45,10 +45,6 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
-
-	private BitmapTextureAtlas mBitmapTextureAtlas;
-	private ITextureRegion mFaceTextureRegion;
-
     BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
 
@@ -135,7 +131,7 @@ public class MainActivity extends BaseGameActivity {
     public void onPopulateScene(Scene pScene,
             OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception {
 
-        mEngine.registerUpdateHandler(new TimerHandler(5.0f, new ITimerCallback()
+        mEngine.registerUpdateHandler(new TimerHandler(2.0f, new ITimerCallback()
         {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler)
@@ -215,26 +211,46 @@ public class MainActivity extends BaseGameActivity {
         physicsWorld = new PhysicsWorld(new Vector2(0,
                 SensorManager.GRAVITY_EARTH), false);
         this.mainScene.registerUpdateHandler(physicsWorld);
+
         createWalls();
     }
 
     private void createWalls() {
         // TODO Auto-generated method stub
-        FixtureDef WALL_FIX = PhysicsFactory.createFixtureDef(0.0f, 0.0f, 0.0f);
-        Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 15, CAMERA_WIDTH,
-                15, this.mEngine.getVertexBufferObjectManager());
+        FixtureDef WALL_FIX = PhysicsFactory.createFixtureDef(0.0f, 0.5f, 0.2f);
+
+        {
+            Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 15, CAMERA_WIDTH,
+                    15, this.mEngine.getVertexBufferObjectManager());
+                ground.setColor(new org.andengine.util.color.Color(15, 50, 0));
+            PhysicsFactory.createBoxBody(physicsWorld, ground,
+                    BodyType.StaticBody, WALL_FIX);
+            this.mainScene.attachChild(ground);
+        }
+
+        {
+            Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 15, CAMERA_WIDTH,
+                    15, this.mEngine.getVertexBufferObjectManager());
             ground.setColor(new org.andengine.util.color.Color(15, 50, 0));
-        PhysicsFactory.createBoxBody(physicsWorld, ground, BodyType.StaticBody,
-                WALL_FIX);
-        this.mainScene.attachChild(ground);
+            ground.setPosition(0, 10.0f);
+            PhysicsFactory.createBoxBody(physicsWorld, ground,
+                    BodyType.StaticBody, WALL_FIX);
+            this.mainScene.attachChild(ground);
+        }
     }
+
+
+/* Populate Scenes ************************************************************/
 
     private void populateMainScene() {
         Sprite sPlayer = new Sprite(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
-                playerTextureRegion, this.mEngine.getVertexBufferObjectManager());
+                playerTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
         sPlayer.setRotation(45.0f);
-        final FixtureDef PLAYER_FIX = PhysicsFactory.createFixtureDef(10.0f,
-                1.0f, 0.0f);
+
+        final FixtureDef PLAYER_FIX = PhysicsFactory.createFixtureDef(1.0f,
+                0.3f, 0.3f);
+        PLAYER_FIX.restitution = 0.3f;
         Body body = PhysicsFactory.createCircleBody(physicsWorld, sPlayer,
                 BodyType.DynamicBody, PLAYER_FIX);
         this.mainScene.attachChild(sPlayer);
@@ -247,7 +263,7 @@ public class MainActivity extends BaseGameActivity {
     }
 
 
-/* Init Splash ****************************************************************/
+/* Initialize Splash Screen ***************************************************/
 
     private void initSplashScene() {
         splashScene = new Scene();
