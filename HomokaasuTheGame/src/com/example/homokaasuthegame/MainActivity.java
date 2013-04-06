@@ -41,6 +41,7 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
+	private ITextureRegion backgroundTextureRegion;
 	private ITextureRegion enemyTextureRegion;
 
     BitmapTextureAtlas playerTexture;
@@ -122,7 +123,7 @@ public class MainActivity extends BaseGameActivity {
         initSplashScene();
 
 
-        pOnCreateSceneCallback.onCreateSceneFinished(this.mainScene);
+        pOnCreateSceneCallback.onCreateSceneFinished(MainActivity.mainScene);
     }
 
     @Override
@@ -185,7 +186,7 @@ public class MainActivity extends BaseGameActivity {
                 mFontTexture,
                 this.getAssets(),
                 "BistroSketch.ttf",
-                80.0f, true, Color.WHITE);
+                80.0f, true, Color.BLACK);
         this.mEngine.getTextureManager().loadTexture(this.mFontTexture);
         this.getFontManager().loadFont(this.mFont);
     }
@@ -194,6 +195,7 @@ public class MainActivity extends BaseGameActivity {
        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
        // width and height power of 2^x
+       backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
        enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
        playerTextureRegion = loadTexture("player.png", 64, 64, 0, 0);
     }
@@ -221,11 +223,11 @@ public class MainActivity extends BaseGameActivity {
 /* Load Scenes ****************************************************************/
 
     private void loadScenes() {
-        this.mainScene = new Scene();
-        this.mainScene.setBackground(new Background(0, 125, 58));
+        MainActivity.mainScene = new Scene();
+        MainActivity.mainScene.setBackground(new Background(0, 125, 58));
         physicsWorld = new PhysicsWorld(new Vector2(0,
                 SensorManager.GRAVITY_EARTH), false);
-        this.mainScene.registerUpdateHandler(physicsWorld);
+        MainActivity.mainScene.registerUpdateHandler(physicsWorld);
 
         createWalls();
     }
@@ -240,7 +242,7 @@ public class MainActivity extends BaseGameActivity {
                 ground.setColor(new org.andengine.util.color.Color(15, 50, 0));
             PhysicsFactory.createBoxBody(physicsWorld, ground,
                     BodyType.StaticBody, WALL_FIX);
-            this.mainScene.attachChild(ground);
+            MainActivity.mainScene.attachChild(ground);
         }
 
         {
@@ -250,7 +252,7 @@ public class MainActivity extends BaseGameActivity {
             ground.setPosition(0, 10.0f);
             PhysicsFactory.createBoxBody(physicsWorld, ground,
                     BodyType.StaticBody, WALL_FIX);
-            this.mainScene.attachChild(ground);
+            MainActivity.mainScene.attachChild(ground);
         }
     }
 
@@ -258,6 +260,11 @@ public class MainActivity extends BaseGameActivity {
 /* Populate Scenes ************************************************************/
 
     private void populateMainScene() {
+        Sprite bg = new Sprite(0, 0,
+                backgroundTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
+        MainActivity.mainScene.attachChild(bg);
+
         Sprite sPlayer = new Sprite(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
                 playerTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
@@ -268,7 +275,7 @@ public class MainActivity extends BaseGameActivity {
         PLAYER_FIX.restitution = 0.3f;
         Body body = PhysicsFactory.createCircleBody(physicsWorld, sPlayer,
                 BodyType.DynamicBody, PLAYER_FIX);
-        this.mainScene.attachChild(sPlayer);
+        MainActivity.mainScene.attachChild(sPlayer);
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(sPlayer,
                 body, true, false));
 
@@ -276,7 +283,7 @@ public class MainActivity extends BaseGameActivity {
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
-        this.mainScene.attachChild(text);
+        MainActivity.mainScene.attachChild(text);
     }
 
 
