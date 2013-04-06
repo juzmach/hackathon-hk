@@ -13,8 +13,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 
 public class Enemy extends Sprite {
-
-
     protected static BodyDef bd;
 	protected static FixtureDef fd;
 
@@ -26,20 +24,22 @@ public class Enemy extends Sprite {
 	public Enemy(float pX, float pY, float pWidth, float pHeight,
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager vertexBufferObjectManager) {
-		super(0, 0, 0, 0, pTextureRegion,
+		super(pX, pY, pWidth, pHeight, pTextureRegion,
 				vertexBufferObjectManager);
 
 		bd.type = BodyType.DynamicBody;
 		bd.active = true;
-		bd.position.set(1f, 2f);
+		bd.position.set(pX, pY);
 
 		fd.density = 1.0f;
 		fd.friction = 0.1f;
 		fd.restitution = 0.01f;
 
 		//Body body = MainActivity.physicsWorld.createBody(bd);
-		Body body = PhysicsFactory.createCircleBody(MainActivity.physicsWorld,
-		        this, BodyType.DynamicBody, fd);
+		Body body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
+		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);
+		/*Body body = PhysicsFactory.createCircleBody(MainActivity.physicsWorld,
+		        this, BodyType.DynamicBody, fd);*/
 		//body.createFixture(fd);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
