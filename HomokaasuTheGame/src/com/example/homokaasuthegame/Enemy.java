@@ -21,7 +21,7 @@ public class Enemy extends Sprite {
 	    fd = new FixtureDef();
 	}
 
-	public Enemy(float pX, float pY, float pWidth, float pHeight,
+	public Enemy(float pX, float pY, float rot, float pWidth, float pHeight,
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager vertexBufferObjectManager) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion,
@@ -29,7 +29,6 @@ public class Enemy extends Sprite {
 
 		bd.type = BodyType.DynamicBody;
 		bd.active = true;
-		bd.position.set(pX, pY);
 
 		fd.density = 1.0f;
 		fd.friction = 0.1f;
@@ -43,7 +42,8 @@ public class Enemy extends Sprite {
 		//body.createFixture(fd);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
-		        new PhysicsConnector(this, body, true, false));
+		        new PhysicsConnector(this, body, true, true));
+		body.setTransform(pX, pY, rot);
 		MainActivity.mainScene.attachChild(this);
 	}
 

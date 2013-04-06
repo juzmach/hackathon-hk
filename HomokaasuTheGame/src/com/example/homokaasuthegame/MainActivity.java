@@ -259,7 +259,7 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        new Enemy(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 453f, 145f,
+        new Enemy(15, 10, 0, 453f, 145f,
                 enemyTextureRegion, this.getVertexBufferObjectManager());
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
