@@ -15,8 +15,4 @@ public class Fly extends Enemy {
 		super(pX, pY, rot, pWidth, pHeight, pTextureRegion, vertexBufferObjectManager);
 		// TODO Auto-generated constructor stub
 	}
-
-	public static void init(){
-
-	}
 }
