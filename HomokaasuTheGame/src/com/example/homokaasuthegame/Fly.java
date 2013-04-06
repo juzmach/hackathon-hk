@@ -10,8 +10,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Fly extends Enemy {
 	
-	private static BodyDef bd;
-	private static FixtureDef fd;
 	private static ITextureRegion textureRegion;
 
 	public Fly(float pX, float pY, float pWidth, float pHeight,
@@ -20,11 +18,4 @@ public class Fly extends Enemy {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, vertexBufferObjectManager);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public static void init(){
-		
-	}
-
-	
-
 }
