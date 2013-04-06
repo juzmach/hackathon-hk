@@ -2,8 +2,10 @@ package com.example.homokaasuthegame;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.vbo.ITiledSpriteVertexBufferObject;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -19,21 +21,21 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 
-public class Enemy extends AnimatedSprite {
+public class Enemy extends Sprite {
 
     private static BodyDef bd = new BodyDef();
 	private static FixtureDef fd = new FixtureDef();
 	
 	public Enemy(float pX, float pY, float pWidth, float pHeight,
-			ITiledTextureRegion pTiledTextureRegion,
-			ITiledSpriteVertexBufferObject pTiledSpriteVertexBufferObject) {
-		super(pX, pY, pWidth, pHeight, pTiledTextureRegion,
-				pTiledSpriteVertexBufferObject);
+			ITextureRegion pTextureRegion,
+			VertexBufferObjectManager vertexBufferObjectManager) {
+		super(0, 0, 0, 0, pTextureRegion,
+				vertexBufferObjectManager);
 		
 		bd.type = BodyType.DynamicBody;
 		bd.active = true;
 		
-		bd.position.set(0, 0);
+		bd.position.set(2, 2);
 		
 		fd.density = 1.0f;
 		fd.friction = 0.1f;

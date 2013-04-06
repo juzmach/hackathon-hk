@@ -46,8 +46,8 @@ public class MainActivity extends BaseGameActivity {
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
 
-	private BitmapTextureAtlas mBitmapTextureAtlas;
-	private ITextureRegion mFaceTextureRegion;
+	private BitmapTextureAtlas enemyTexture;
+	private ITextureRegion enemyTextureRegion;
 
     BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
@@ -201,8 +201,11 @@ public class MainActivity extends BaseGameActivity {
        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
        // width and height power of 2^x
        playerTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
+       enemyTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
        playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                playerTexture, this, "player.png", 0, 0);
+       enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+    		   enemyTexture, this, "pie.png", 0, 0);
        playerTexture.load();
     }
 
@@ -238,6 +241,7 @@ public class MainActivity extends BaseGameActivity {
         Body body = PhysicsFactory.createCircleBody(physicsWorld, sPlayer,
                 BodyType.DynamicBody, PLAYER_FIX);
         this.mainScene.attachChild(sPlayer);
+        Enemy n = new Enemy(0, 0, 0, 0, enemyTextureRegion, this.getVertexBufferObjectManager());
         physicsWorld.registerPhysicsConnector(new PhysicsConnector(sPlayer,
                 body, true, false));
 
