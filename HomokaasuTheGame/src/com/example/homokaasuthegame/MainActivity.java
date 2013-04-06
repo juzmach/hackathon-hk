@@ -202,10 +202,6 @@ public class MainActivity extends BaseGameActivity {
        // width and height power of 2^x
        playerTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
        enemyTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
-       playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-               playerTexture, this, "player.png", 0, 0);
-       enemyTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-    		   enemyTexture, this, "pie.png", 0, 0);
        playerTexture.load();
        enemyTexture.load();
        enemyTextureRegion = loadTexture("pie.png", 64, 64, 0, 0);
