@@ -1,9 +1,5 @@
 package com.example.homokaasuthegame;
 
-import java.util.LinkedList;
-
-import javax.microedition.khronos.opengles.GL10;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -13,7 +9,6 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
@@ -35,8 +30,6 @@ import android.view.KeyEvent;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -44,6 +37,7 @@ public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
     protected static final int CAMERA_HEIGHT = 550;
 
+<<<<<<< HEAD
     
     
 	
@@ -61,6 +55,7 @@ public class MainActivity extends BaseGameActivity {
     ITextureRegion playerTextureRegion;
     
     static PhysicsWorld physicsWorld;
+
     private BitmapTextureAtlas mFontTexture;
     private Font mFont;
 
@@ -69,8 +64,7 @@ public class MainActivity extends BaseGameActivity {
     private Scene mainScene;
 
     /* Splash screen resources */
-    private BitmapTextureAtlas splashTexture;
-    private ITextureRegion splashTextureRegion;
+    Sprite splashSprite;
 
     private Text text;
 
@@ -108,11 +102,26 @@ public class MainActivity extends BaseGameActivity {
     }
 
     private void loadSplashScreen() {
+        BitmapTextureAtlas splashTexture;
+        ITextureRegion splashTextureRegion;
+
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        splashTexture = new BitmapTextureAtlas(this.getTextureManager(),
-                318, 500, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTexture, this, "player.png", 0, 0);
+        splashTexture = new BitmapTextureAtlas(getTextureManager(), 1024, 550,
+                TextureOptions.DEFAULT);
+        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTexture, this, "kerola.png", 0, 0);
         splashTexture.load();
+
+        splashSprite = new Sprite(splashTextureRegion.getWidth(),
+                splashTextureRegion.getHeight(), splashTextureRegion,
+                mEngine.getVertexBufferObjectManager())
+        {
+            @Override
+            protected void preDraw(GLState pGLState, Camera pCamera)
+            {
+                super.preDraw(pGLState, pCamera);
+                pGLState.enableDither();
+            }
+        };
     }
 
     @Override
@@ -175,7 +184,8 @@ public class MainActivity extends BaseGameActivity {
     private void loadFonts() {
         /* Load the font we are going to use. */
         FontFactory.setAssetBasePath("fonts/");
-        this.mFontTexture = new BitmapTextureAtlas(this.getTextureManager(),
+        this.mFontTexture = new BitmapTextureAtlas(
+                this.getTextureManager(),
                 1024, 1024,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         this.mFont = FontFactory.createFromAsset(
@@ -242,32 +252,9 @@ public class MainActivity extends BaseGameActivity {
 /* Init Splash ****************************************************************/
 
     private void initSplashScene() {
-        splashScene = new Scene();/*
-        Sprite splash = new Sprite(
-                splashTextureRegion.getWidth(),
-                splashTextureRegion.getHeight(),
-                splashTextureRegion,
-                this.mEngine.getVertexBufferObjectManager());*/
+        splashScene = new Scene();
+        splashScene.setBackgroundEnabled(false);
 
-        Sprite splash = new Sprite(splashTextureRegion.getWidth(),
-                splashTextureRegion.getHeight(), splashTextureRegion,
-                mEngine.getVertexBufferObjectManager())
-        {
-            @Override
-            protected void preDraw(GLState pGLState, Camera pCamera)
-            {
-                super.preDraw(pGLState, pCamera);
-                pGLState.enableDither();
-            }
-        };
-        splashScene.setVisible(false);
-
-        splash.setScale(0.5f);
-        splash.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        //float[] coord = splash.getSceneCenterCoordinates();
-        //splash.setPosition(coord[0], coord[1]);
-        splashScene.attachChild(splash);
+        splashScene.attachChild(splashSprite);
     }
-    
-    
 }
