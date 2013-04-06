@@ -25,6 +25,7 @@ public class Ant extends Enemy{
 	public static void init(){
 		fd = new FixtureDef();
 		bd = new BodyDef();
+		
 	}
 
 }
