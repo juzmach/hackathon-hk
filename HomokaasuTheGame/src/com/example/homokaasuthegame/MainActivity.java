@@ -40,7 +40,6 @@ public class MainActivity extends BaseGameActivity {
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
 	private ITextureRegion backgroundTextureRegion;
-	private ITextureRegion enemyTextureRegion;
 	private ITextureRegion pieTextureRegion;
 
     static PhysicsWorld physicsWorld;
@@ -192,8 +191,10 @@ public class MainActivity extends BaseGameActivity {
 
        // width and height power of 2^x
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
-       enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
        pieTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
+
+       /* Call static initializers */
+       Ant.init(this);
     }
 
     /**
@@ -203,7 +204,7 @@ public class MainActivity extends BaseGameActivity {
      * @param pTextureY
      * @return ITextureRegion
      */
-    private ITextureRegion loadTexture(String name, int width, int height, int pTextureX, int pTextureY) {
+    public ITextureRegion loadTexture(String name, int width, int height, int pTextureX, int pTextureY) {
         BitmapTextureAtlas texture;
         ITextureRegion textureRegion;
 
@@ -263,13 +264,16 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        Enemy e = new Enemy(15, 10, 0, 453f, 145f,
-                enemyTextureRegion, this.getVertexBufferObjectManager());
+        /*Enemy e = new Enemy(15, 10, 0, 453f, 145f,
+                enemyTextureRegion, this.getVertexBufferObjectManager());*/
+        //mainScene.registerTouchArea(e);
 
-        mainScene.registerTouchArea(e);
+        Ant a = new Ant(10, 10, 100f, 48f, this.getVertexBufferObjectManager());
 
-        new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 400, 300,
-        		pieTextureRegion, this.getVertexBufferObjectManager());
+        /*new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 400, 300,
+        		pieTextureRegion, this.getVertexBufferObjectManager());*/
+        mainScene.registerTouchArea(a);
+
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
