@@ -9,7 +9,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 
 /**
@@ -23,16 +22,16 @@ public class Pie extends Sprite {
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, pVertexBufferObjectManager);
-		
+
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
 		bd.position.set(pX, pY);
-		
-		FixtureDef fd = new FixtureDef(); 
+
+		FixtureDef fd = new FixtureDef();
 		fd.isSensor = true;
 		Body body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
-		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);;
-		
+		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);
+
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, false));
 		body.setTransform(pX, pY, 0);

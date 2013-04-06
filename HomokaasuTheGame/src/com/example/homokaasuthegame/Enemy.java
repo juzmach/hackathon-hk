@@ -64,10 +64,6 @@ public class Enemy extends AnimatedSprite {
         groundBody = MainActivity.physicsWorld.createBody(bodyDef);
 	}
 
-	public void createBody() {
-
-	}
-
 	QueryCallback callback = new QueryCallback() {
         @Override
         public boolean reportFixture(Fixture fixture) {
@@ -86,11 +82,9 @@ public class Enemy extends AnimatedSprite {
         }
     };
 
-
-
 	@Override
-    public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float touchAreaX,
-            final float touchAreaY) {
+    public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
+            final float touchAreaX, final float touchAreaY) {
         switch (pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_DOWN:
             if (joint != null)

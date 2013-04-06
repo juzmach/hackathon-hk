@@ -204,7 +204,8 @@ public class MainActivity extends BaseGameActivity {
      * @param pTextureY
      * @return ITextureRegion
      */
-    public ITextureRegion loadTexture(String name, int width, int height, int pTextureX, int pTextureY) {
+    public ITextureRegion loadTexture(String name, int width, int height,
+            int pTextureX, int pTextureY) {
         BitmapTextureAtlas texture;
         ITextureRegion textureRegion;
 
@@ -277,7 +278,7 @@ public class MainActivity extends BaseGameActivity {
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
-        
+
         // Z-indexit kuntoon
         mainScene.sortChildren();
     }
