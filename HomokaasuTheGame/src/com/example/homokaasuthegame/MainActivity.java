@@ -195,7 +195,7 @@ public class MainActivity extends BaseGameActivity {
        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
        // width and height power of 2^x
-       playerTextureRegion = loadTexture("player.png", 0, 0);
+       playerTextureRegion = loadTexture("player.png", 64, 64, 0, 0);
     }
 
     /**
