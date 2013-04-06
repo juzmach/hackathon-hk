@@ -8,8 +8,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.debug.Debug;
-import org.andengine.util.debug.Debug.DebugLevel;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -103,7 +101,6 @@ public class Enemy extends AnimatedSprite {
 
             if (hitBody == null)
                 return false;
-            Debug.log(DebugLevel.ALL, "Touch: " + hitBody + "; " + body + ", " + testPoint.x);
 
             /* Ignore kinematic bodies, they don't work with the mouse joint */
             if (hitBody.getType() == BodyType.KinematicBody)
@@ -115,7 +112,7 @@ public class Enemy extends AnimatedSprite {
                 def.bodyB = hitBody;
                 def.collideConnected = true;
                 def.target.set(testPoint.x, testPoint.y);
-                def.maxForce = 500f * hitBody.getMass() * MainActivity.physicsWorld.getGravity().len();
+                def.maxForce = 50f * hitBody.getMass() * MainActivity.physicsWorld.getGravity().len();
 
                 startPoint.set(testPoint.x, testPoint.y);
                 joint = (MouseJoint)((body.getWorld()).createJoint(def));
@@ -125,7 +122,6 @@ public class Enemy extends AnimatedSprite {
 
         case TouchEvent.ACTION_MOVE:
             if (joint != null) {
-                Debug.log(DebugLevel.ALL, "!!!! ");
                 joint.setTarget(
                         new Vector2(pSceneTouchEvent.getX() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
                                 pSceneTouchEvent.getY() / PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT));
@@ -134,7 +130,6 @@ public class Enemy extends AnimatedSprite {
 
         case TouchEvent.ACTION_UP:
             if (joint != null) {
-                Debug.log(DebugLevel.ALL, "UP");
                 MainActivity.physicsWorld.destroyJoint(joint);
                 joint = null;
             }
