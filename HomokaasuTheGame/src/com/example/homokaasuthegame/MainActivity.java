@@ -213,6 +213,7 @@ public class MainActivity extends BaseGameActivity {
         textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
                 texture, this, name, pTextureX, pTextureY);
 
+        texture.load();
         return textureRegion;
     }
 
