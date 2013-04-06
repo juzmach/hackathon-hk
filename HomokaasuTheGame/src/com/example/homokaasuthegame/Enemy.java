@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Enemy extends Sprite {
 
+
     protected static BodyDef bd;
 	protected static FixtureDef fd;
 
