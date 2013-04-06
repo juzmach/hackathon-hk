@@ -23,8 +23,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class Enemy extends Sprite {
 
-    private static BodyDef bd = new BodyDef();
-	private static FixtureDef fd = new FixtureDef();
+    private static BodyDef bd;
+	private static FixtureDef fd;
+	
+	static {
+		bd = new BodyDef();
+		fd = new FixtureDef();
+	}
 	
 	public Enemy(float pX, float pY, float pWidth, float pHeight,
 			ITextureRegion pTextureRegion,
