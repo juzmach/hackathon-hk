@@ -40,7 +40,6 @@ public class MainActivity extends BaseGameActivity {
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
 	private ITextureRegion backgroundTextureRegion;
-	private ITextureRegion enemyTextureRegion;
 	private ITextureRegion pieTextureRegion;
 
     static PhysicsWorld physicsWorld;
@@ -192,8 +191,10 @@ public class MainActivity extends BaseGameActivity {
 
        // width and height power of 2^x
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
-       enemyTextureRegion = loadTexture("ant.png", 500, 500, 0, 0);
        pieTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
+
+       /* Call static initializers */
+       Ant.init(this);
     }
 
     /**
@@ -203,7 +204,7 @@ public class MainActivity extends BaseGameActivity {
      * @param pTextureY
      * @return ITextureRegion
      */
-    private ITextureRegion loadTexture(String name, int width, int height, int pTextureX, int pTextureY) {
+    public ITextureRegion loadTexture(String name, int width, int height, int pTextureX, int pTextureY) {
         BitmapTextureAtlas texture;
         ITextureRegion textureRegion;
 
@@ -242,7 +243,7 @@ public class MainActivity extends BaseGameActivity {
             MainActivity.mainScene.attachChild(ground);
         }
 
-        {
+        /*{
             Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 15, CAMERA_WIDTH,
                     15, this.mEngine.getVertexBufferObjectManager());
             ground.setColor(new org.andengine.util.color.Color(15, 50, 0));
@@ -250,7 +251,7 @@ public class MainActivity extends BaseGameActivity {
             PhysicsFactory.createBoxBody(physicsWorld, ground,
                     BodyType.StaticBody, WALL_FIX);
             MainActivity.mainScene.attachChild(ground);
-        }
+        }*/
     }
 
 
@@ -263,14 +264,13 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        Enemy e = new Enemy(5, 14.35f, 0, 100f, 39f,
-                enemyTextureRegion, this.getVertexBufferObjectManager());
-        e.setZIndex(2);
+        Ant a = new Ant(10, 10, this.getVertexBufferObjectManager());
+        mainScene.registerTouchArea(a);
 
-        mainScene.registerTouchArea(e);
-
-        new Pie(15, 14.35f, 453, 145,
+        new Pie(15f, 14.35f, 453f, 145f,
         		pieTextureRegion, this.getVertexBufferObjectManager());
+
+
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);

@@ -1,11 +1,12 @@
 package com.example.homokaasuthegame;
 
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 import org.andengine.util.debug.Debug.DebugLevel;
@@ -21,7 +22,7 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
 
-public class Enemy extends Sprite {
+public class Enemy extends AnimatedSprite {
     protected static BodyDef bd;
 	protected static FixtureDef fd;
 	protected Body body;
@@ -40,7 +41,7 @@ public class Enemy extends Sprite {
 	public Enemy(float pX, float pY, float rot, float pWidth, float pHeight,
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager vertexBufferObjectManager) {
-		super(pX, pY, pWidth, pHeight, pTextureRegion,
+		super(pX, pY, pWidth, pHeight, (ITiledTextureRegion)pTextureRegion,
 				vertexBufferObjectManager);
 
 		bd.type = BodyType.DynamicBody;
@@ -50,12 +51,8 @@ public class Enemy extends Sprite {
 		fd.friction = 0.1f;
 		fd.restitution = 0.01f;
 
-		//Body body = MainActivity.physicsWorld.createBody(bd);
 		body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
 		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);
-		/*Body body = PhysicsFactory.createCircleBody(MainActivity.physicsWorld,
-		        this, BodyType.DynamicBody, fd);*/
-		//body.createFixture(fd);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, true));
@@ -65,6 +62,10 @@ public class Enemy extends Sprite {
 		/* Drag */
 		BodyDef bodyDef = new BodyDef();
         groundBody = MainActivity.physicsWorld.createBody(bodyDef);
+	}
+
+	public void createBody() {
+
 	}
 
 	QueryCallback callback = new QueryCallback() {
