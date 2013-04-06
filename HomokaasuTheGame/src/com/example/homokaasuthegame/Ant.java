@@ -7,12 +7,11 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class Ant extends Enemy{
-
     private static BitmapTextureAtlas textureAtlas;
 	private static ITextureRegion textureRegion;
 
-	private static int   SPR_COLUMN  = 2;
-	private static int   SPR_ROWS  = 1;
+	private static int SPR_COLUMN  = 2;
+	private static int SPR_ROWS    = 1;
 
 	public static void init(MainActivity activity) {
 	    textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
@@ -22,9 +21,10 @@ public class Ant extends Enemy{
 	    textureAtlas.load();
 	}
 
-	public Ant(float pX, float pY,
+	public Ant(float pX, float pY, boolean flip,
 	        VertexBufferObjectManager vertexBufferObjectManager) {
 		super(pX, pY, 0, 100f, 48f, textureRegion, vertexBufferObjectManager);
 		this.animate(100);
+		this.setFlippedHorizontal(flip);
 	}
 }

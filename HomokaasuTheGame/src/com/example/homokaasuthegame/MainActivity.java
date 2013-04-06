@@ -264,8 +264,11 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        Ant a = new Ant(10, 10, this.getVertexBufferObjectManager());
+        Ant a = new Ant(30, 10, false, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(a);
+
+        Ant b = new Ant(5, 10, true, this.getVertexBufferObjectManager());
+        mainScene.registerTouchArea(b);
 
         new Pie(15f, 14.35f, 453f, 145f,
         		pieTextureRegion, this.getVertexBufferObjectManager());
