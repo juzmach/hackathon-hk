@@ -263,9 +263,9 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        Enemy e = new Enemy(15, 10, 453f, 145f,
+        Enemy e = new Enemy(15, 10, 0, 453f, 145f,
                 enemyTextureRegion, this.getVertexBufferObjectManager());
-        
+
         mainScene.registerTouchArea(e);
 
         new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 400, 300,
