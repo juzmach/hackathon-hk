@@ -277,6 +277,9 @@ public class MainActivity extends BaseGameActivity {
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
+        
+        // Z-indexit kuntoon
+        mainScene.sortChildren();
     }
 
 
