@@ -43,6 +43,7 @@ public class MainActivity extends BaseGameActivity {
 
 	private ITextureRegion backgroundTextureRegion;
 	private ITextureRegion enemyTextureRegion;
+	private ITextureRegion pieTextureRegion;
 
     BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
@@ -198,6 +199,7 @@ public class MainActivity extends BaseGameActivity {
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
        enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
        playerTextureRegion = loadTexture("player.png", 64, 64, 0, 0);
+       pieTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
     }
 
     /**
@@ -280,7 +282,7 @@ public class MainActivity extends BaseGameActivity {
                 body, true, false));
 
         Enemy n = new Enemy(0, 0, 0, 0, enemyTextureRegion, this.getVertexBufferObjectManager());
-
+        Pie p = new Pie(CAMERA_WIDTH, CAMERA_HEIGHT, 300, 200, pieTextureRegion, this.getVertexBufferObjectManager());
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
