@@ -39,7 +39,7 @@ public class Enemy extends AnimatedSprite {
 		fd.friction = 0.1f;
 		fd.restitution = 0.01f;
 		Body b = MainActivity.world.createBody(bd);	
-		Fixture f = b.createFixture(fd);
+		b.createFixture(fd);
 		
 		MainActivity.physicsWorld.registerPhysicsConnector(new PhysicsConnector(this,
                 b, true, false));

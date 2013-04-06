@@ -25,6 +25,7 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
 
@@ -52,8 +53,13 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
     
+
+	private BitmapTextureAtlas mBitmapTextureAtlas;
+	private ITextureRegion mFaceTextureRegion;
+	
     BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
+    
     static PhysicsWorld physicsWorld;
     private BitmapTextureAtlas mFontTexture;
     private Font mFont;
@@ -113,6 +119,7 @@ public class MainActivity extends BaseGameActivity {
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
             throws Exception {
         initSplashScene();
+        
 
         pOnCreateSceneCallback.onCreateSceneFinished(this.mainScene);
     }
