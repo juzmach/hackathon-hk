@@ -45,7 +45,6 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
-    BitmapTextureAtlas playerTexture;
     ITextureRegion playerTextureRegion;
 
     static PhysicsWorld physicsWorld;
@@ -193,13 +192,28 @@ public class MainActivity extends BaseGameActivity {
     }
 
     private void loadGfx() {
-        // TODO Auto-generated method stub
        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+
        // width and height power of 2^x
-       playerTexture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
-       playerTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-               playerTexture, this, "player.png", 0, 0);
-       playerTexture.load();
+       playerTextureRegion = loadTexture("player.png", 0, 0);
+    }
+
+    /**
+     * Load texture
+     * @param name Filename
+     * @param pTextureX
+     * @param pTextureY
+     * @return ITextureRegion
+     */
+    private ITextureRegion loadTexture(String name, int pTextureX, int pTextureY) {
+        BitmapTextureAtlas texture;
+        ITextureRegion textureRegion;
+
+        texture = new BitmapTextureAtlas(getTextureManager(), 64, 64);
+        textureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+                texture, this, name, pTextureX, pTextureY);
+
+        return textureRegion;
     }
 
 
