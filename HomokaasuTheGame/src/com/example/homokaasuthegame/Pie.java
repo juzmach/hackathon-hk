@@ -23,13 +23,15 @@ public class Pie extends Sprite {
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager pVertexBufferObjectManager) {
 		super(pX, pY, pWidth, pHeight, pTextureRegion, pVertexBufferObjectManager);
+		
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
-		bd.position.set(pX, pY);		
+		bd.position.set(pX, pY);
+		
 		FixtureDef fd = new FixtureDef(); 
 		fd.isSensor = true;
-		Body body = PhysicsFactory.createCircleBody(MainActivity.physicsWorld,
-		        this, BodyType.DynamicBody, fd);
+		Body body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
+		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);;
 		
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, false));

@@ -41,6 +41,7 @@ public class MainActivity extends BaseGameActivity {
 
 	private ITextureRegion backgroundTextureRegion;
 	private ITextureRegion enemyTextureRegion;
+	private ITextureRegion pieTextureRegion;
 
     static PhysicsWorld physicsWorld;
 
@@ -192,6 +193,7 @@ public class MainActivity extends BaseGameActivity {
        // width and height power of 2^x
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
        enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
+       pieTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
     }
 
     /**
@@ -263,6 +265,9 @@ public class MainActivity extends BaseGameActivity {
         Enemy e = new Enemy(15, 10, 0, 453f, 145f,
                 enemyTextureRegion, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(e);
+
+        new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 0, 400, 300, 
+        		pieTextureRegion, this.getVertexBufferObjectManager());
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
