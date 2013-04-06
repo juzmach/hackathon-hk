@@ -266,7 +266,7 @@ public class MainActivity extends BaseGameActivity {
                 enemyTextureRegion, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(e);
 
-        new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 0, 400, 300, 
+        new Pie(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 400, 300,
         		pieTextureRegion, this.getVertexBufferObjectManager());
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
