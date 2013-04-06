@@ -13,7 +13,6 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.opengl.font.Font;
@@ -30,7 +29,6 @@ import android.hardware.SensorManager;
 import android.view.KeyEvent;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -43,9 +41,6 @@ public class MainActivity extends BaseGameActivity {
 
 	private ITextureRegion backgroundTextureRegion;
 	private ITextureRegion enemyTextureRegion;
-
-    BitmapTextureAtlas playerTexture;
-    ITextureRegion playerTextureRegion;
 
     static PhysicsWorld physicsWorld;
 
@@ -197,7 +192,6 @@ public class MainActivity extends BaseGameActivity {
        // width and height power of 2^x
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
        enemyTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
-       playerTextureRegion = loadTexture("player.png", 64, 64, 0, 0);
     }
 
     /**
@@ -265,21 +259,8 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
 
-        Sprite sPlayer = new Sprite(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
-                playerTextureRegion,
-                this.mEngine.getVertexBufferObjectManager());
-        sPlayer.setRotation(45.0f);
-
-        final FixtureDef PLAYER_FIX = PhysicsFactory.createFixtureDef(1.0f,
-                0.3f, 0.3f);
-        PLAYER_FIX.restitution = 0.3f;
-        Body body = PhysicsFactory.createCircleBody(physicsWorld, sPlayer,
-                BodyType.DynamicBody, PLAYER_FIX);
-        MainActivity.mainScene.attachChild(sPlayer);
-        physicsWorld.registerPhysicsConnector(new PhysicsConnector(sPlayer,
-                body, true, false));
-
-        Enemy n = new Enemy(0, 0, 0, 0, enemyTextureRegion, this.getVertexBufferObjectManager());
+        new Enemy(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, 453f, 145f,
+                enemyTextureRegion, this.getVertexBufferObjectManager());
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
