@@ -35,6 +35,7 @@ public class Pie extends Sprite {
 		
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, false));
+		body.setTransform(pX, pY, 0);
 		MainActivity.mainScene.attachChild(this);
 	}
 
