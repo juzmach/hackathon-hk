@@ -224,6 +224,7 @@ public class MainActivity extends BaseGameActivity {
         physicsWorld = new PhysicsWorld(new Vector2(0,
                 SensorManager.GRAVITY_EARTH), false);
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
+        mainScene.setTouchAreaBindingOnActionDownEnabled(true);
 
         createWalls();
     }
