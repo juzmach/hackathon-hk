@@ -265,6 +265,7 @@ public class MainActivity extends BaseGameActivity {
 
         Enemy e = new Enemy(5, 14.35f, 0, 100f, 39f,
                 enemyTextureRegion, this.getVertexBufferObjectManager());
+        e.setZIndex(2);
 
         mainScene.registerTouchArea(e);
 
@@ -273,6 +274,9 @@ public class MainActivity extends BaseGameActivity {
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
+        
+        // Z-indexit kuntoon
+        mainScene.sortChildren();
     }
 
 
