@@ -48,6 +48,7 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	final LinkedList<Enemy> removeList = new LinkedList<Enemy>();
+	int score;
 
 	private Pie pie;
 	Vector2 target;
@@ -306,10 +307,14 @@ public class MainActivity extends BaseGameActivity {
 /* Load Scenes ****************************************************************/
 
     private void loadScenes() {
+        enemies.clear();
+        removeList.clear();
+        score = 0;
+
         MainActivity.mainScene = new Scene();
         MainActivity.mainScene.setBackground(new Background(0, 125, 58));
-        physicsWorld = new PhysicsWorld(new Vector2(0,
-                SensorManager.GRAVITY_EARTH), false);
+        physicsWorld = new PhysicsWorld(
+                new Vector2(0, SensorManager.GRAVITY_EARTH), false);
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
         physicsWorld.setContactListener(new PieContactListener(this));
