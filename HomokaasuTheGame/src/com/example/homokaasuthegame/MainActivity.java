@@ -64,6 +64,7 @@ public class MainActivity extends BaseGameActivity {
     /* Scenes */
     private Scene splashScene;
     static public Scene mainScene;
+    private Scene endScene;
 
     public static MainActivity mainActivity;
 
@@ -75,6 +76,7 @@ public class MainActivity extends BaseGameActivity {
         SPLASH,
         MAIN,
         MENU,
+        END,
         OPTIONS,
         WORLD_SELECTION,
         LEVEL_SELECTION,
@@ -176,8 +178,9 @@ public class MainActivity extends BaseGameActivity {
                 case SPLASH:
                     break;
                 case MAIN:
-                    System.exit(0);
                     break;
+                case END:
+                	System.exit(0);
             }
         }
         return false;
@@ -225,11 +228,8 @@ public class MainActivity extends BaseGameActivity {
     public void gameOVer() {
         if (!gameOver)  {
             gameOver = true;
-            theme.stop();
-            gameoverTheme.play();
-            Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
-                    mFont, "PELI OHI", this.getVertexBufferObjectManager());
-            MainActivity.mainScene.attachChild(gameOverText);
+            populateEndScene();
+            mEngine.setScene(endScene);
         }
     }
 
@@ -321,6 +321,9 @@ public class MainActivity extends BaseGameActivity {
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
         physicsWorld.setContactListener(new PieContactListener(this));
 
+        endScene = new Scene();
+        endScene.setBackground(new Background(0, 125, 58));
+        
         createWalls();
     }
 
@@ -384,6 +387,42 @@ public class MainActivity extends BaseGameActivity {
 
         // Z-indexit kuntoon
         mainScene.sortChildren();
+    }
+    
+    public void populateEndScene() {
+        Sprite ebg = new Sprite(0, 0,
+                backgroundTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
+        
+        endScene.attachChild(ebg);
+        theme.stop();
+        gameoverTheme.play();
+        mEngine.setScene(endScene);
+        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+                mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
+        endScene.attachChild(gameOverText);
+        
+        mainScene.registerUpdateHandler(new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                for (Enemy e : removeList) {
+                    enemies.remove(e);
+                    physicsWorld.destroyBody(e.body);
+                    mainScene.unregisterTouchArea(e);
+                    e.detachChildren();
+                    e.detachSelf();
+                }
+                removeList.clear();
+
+                scoreText.setText(String.valueOf(score));
+            }
+
+			@Override
+			public void reset() {
+				// TODO Auto-generated method stub
+				
+			}
+        });
     }
 
 
