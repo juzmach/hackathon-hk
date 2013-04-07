@@ -476,7 +476,7 @@ public class MainActivity extends BaseGameActivity {
 			}
         });
 
-        new MenuButton(650f, 350f,
+        /*new MenuButton(650f, 350f,
                 "menu_exit_button.png", this.getVertexBufferObjectManager(),
                 endScene,
                 new MenuButton.IAction() {
@@ -488,7 +488,7 @@ public class MainActivity extends BaseGameActivity {
                         mEngine.setScene(menuScene);
                         currentScene = SceneType.MENU;
                     }
-                });
+                });*/
 	}
 
 	private void populateMenuScene() {
