@@ -17,7 +17,7 @@ public class Ant extends Enemy{
 
 	public static void init(MainActivity activity) {
 	    textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
-	            256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+	            200, 40, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 	    textureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, activity.getAssets(),
 	            "ant_sprsheet.png", 0, 0, SPR_COLUMN, SPR_ROWS);
 	    textureAtlas.load();
