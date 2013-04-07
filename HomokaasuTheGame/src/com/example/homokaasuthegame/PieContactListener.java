@@ -81,8 +81,6 @@ public class PieContactListener implements ContactListener
                     activity.gameOVer();
                     Debug.log(DebugLevel.ALL, "Game over!");
                 }
-
-                Debug.log(DebugLevel.ALL, "Timer!");
             }
         }));
     }
