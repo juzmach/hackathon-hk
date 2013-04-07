@@ -319,7 +319,7 @@ public class MainActivity extends BaseGameActivity {
 
         pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 
-        Text text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
+        Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
 
