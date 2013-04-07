@@ -274,8 +274,8 @@ public class MainActivity extends BaseGameActivity {
     private void loadMfx() {
     	MusicFactory.setAssetBasePath("mfx/");
     	try {
-            this.theme = MusicFactory.createMusicFromAsset(this.mEngine.getMusicManager(),
-            		this, "themeofpie.ogg");
+            this.theme = MusicFactory.createMusicFromAsset(
+                    this.mEngine.getMusicManager(), this, "themeofpie.ogg");
             this.theme.setLooping(true);
             this.gameoverTheme = MusicFactory.createMusicFromAsset
             		(this.mEngine.getMusicManager(), this, "gameover.ogg");
