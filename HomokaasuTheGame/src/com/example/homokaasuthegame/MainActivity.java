@@ -390,7 +390,7 @@ public class MainActivity extends BaseGameActivity {
         MainActivity.mainScene.attachChild(bg);
         target = new Vector2(15, 13);
 
-        pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
+        pie = new Pie(16f, 14.35f, this.getVertexBufferObjectManager());
 
         Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());

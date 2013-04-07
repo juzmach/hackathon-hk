@@ -85,7 +85,7 @@ public class Pie extends AnimatedSprite {
             if (spawnInterval > 0.3f)
                 spawnInterval -= 0.01f;
 
-            float xSpawn = (Math.random() > 0.5f) ? 30f : 5f;
+            float xSpawn = (Math.random() > 0.5f) ? 30f : 3f;
             if (Math.random() < 0.6f) {
                 MainActivity.mainActivity.spawnAnt(xSpawn, 15);
             } else {
