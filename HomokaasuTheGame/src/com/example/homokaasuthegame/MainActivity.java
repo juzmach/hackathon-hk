@@ -1,7 +1,10 @@
 package com.example.homokaasuthegame;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -23,6 +26,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.util.debug.Debug;
 
 import android.graphics.Color;
 import android.hardware.SensorManager;
@@ -36,6 +40,9 @@ public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
     protected static final int CAMERA_HEIGHT = 550;
 
+    //tunes
+    private Music theme;
+    
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
@@ -76,6 +83,9 @@ public class MainActivity extends BaseGameActivity {
                 new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT),
                 // new FillResolutionPolicy(),
                 mCamera);
+        options.getAudioOptions().setNeedsMusic(true);
+        options.getAudioOptions().setNeedsSound(true);
+        
 
         return options;
     }
@@ -166,9 +176,10 @@ public class MainActivity extends BaseGameActivity {
     public void loadResources() {
         loadFonts();
         loadGfx();
+        loadMfx();
     }
 
-    private void loadFonts() {
+	private void loadFonts() {
         /* Load the font we are going to use. */
         FontFactory.setAssetBasePath("fonts/");
         this.mFontTexture = new BitmapTextureAtlas(
@@ -195,6 +206,16 @@ public class MainActivity extends BaseGameActivity {
        Ant.init(this);
        Fly.init(this);
        Pie.init(this);
+    }
+    
+    private void loadMfx() {
+    	MusicFactory.setAssetBasePath("mfx/");
+    	try {
+            this.theme = MusicFactory.createMusicFromAsset(this.mEngine.getMusicManager(), this, "themeofpie.ogg");
+            this.theme.setLooping(true);
+    	} catch (final IOException e) {
+    		Debug.e("Unable to load the tunes!", e);
+    	}
     }
 
     /**
@@ -248,6 +269,7 @@ public class MainActivity extends BaseGameActivity {
 /* Populate Scenes ************************************************************/
 
     private void populateMainScene() {
+    	theme.play();
         /* Create background */
         Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
