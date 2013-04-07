@@ -34,12 +34,16 @@ public class Fly extends Enemy {
 	    textureAtlas.load();
 	}
 
+	boolean AIDead = false;
+
 	@Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
 
-        if (joint != null)
+        if (joint != null || AIDead) {
+            AIDead = true;
             return;
+        }
         if (body.getPosition().x <= target.x) {
             this.setFlippedHorizontal(true);
             body.setLinearVelocity(0.4f + (0.5f - (float)Math.random()) * 5f,
