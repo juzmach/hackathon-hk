@@ -36,6 +36,7 @@ public class MainActivity extends BaseGameActivity {
 
 	private Pie pie;
 	private ITextureRegion backgroundTextureRegion;
+	boolean gameOver = false;
 
     static PhysicsWorld physicsWorld;
 
@@ -168,9 +169,12 @@ public class MainActivity extends BaseGameActivity {
      * This is called if pie.eat() returns false
      */
     public void gameOVer() {
-        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200, mFont, "PELI OHI",
-                this.getVertexBufferObjectManager());
-        MainActivity.mainScene.attachChild(gameOverText);
+        if (!gameOver)  {
+            gameOver = true;
+            Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+                    mFont, "PELI OHI", this.getVertexBufferObjectManager());
+            MainActivity.mainScene.attachChild(gameOverText);
+        }
     }
 
 
