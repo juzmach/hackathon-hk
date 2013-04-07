@@ -229,6 +229,7 @@ public class MainActivity extends BaseGameActivity {
             gameoverTheme.play();
             Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
                     mFont, "PELI OHI", this.getVertexBufferObjectManager());
+            gameOverText.setZIndex(100);
             MainActivity.mainScene.attachChild(gameOverText);
         }
     }
@@ -269,6 +270,7 @@ public class MainActivity extends BaseGameActivity {
        Ant.init(this);
        Fly.init(this);
        Pie.init(this);
+       Paussi.init(this);
     }
 
     private void loadMfx() {
@@ -337,6 +339,22 @@ public class MainActivity extends BaseGameActivity {
         }
     }
 
+    public void paussi() {
+            getEngine().registerUpdateHandler(new TimerHandler(0.3f, new ITimerCallback()
+            {
+                @Override
+                public void onTimePassed(final TimerHandler pTimerHandler)
+                {
+                    Enemy e = enemies.getFirst();
+                    removeList.add(e);
+                    enemies.remove(e);
+                    if (enemies.size() > 0) {
+                        paussi();
+                    }
+                }
+            }));
+    }
+
 
 /* Populate Scenes ************************************************************/
 
@@ -353,11 +371,15 @@ public class MainActivity extends BaseGameActivity {
 
         Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());
+        text.setZIndex(100);
         MainActivity.mainScene.attachChild(text);
 
         scoreText = new Text(CAMERA_WIDTH - 100, 10, mFont,
                 "00000", this.getVertexBufferObjectManager());
+        scoreText.setZIndex(100);
         MainActivity.mainScene.attachChild(scoreText);
+
+        new Paussi(640f, -10f, this.getVertexBufferObjectManager());
 
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
@@ -374,6 +396,7 @@ public class MainActivity extends BaseGameActivity {
                 removeList.clear();
 
                 scoreText.setText(String.valueOf(score));
+                mainScene.sortChildren();
             }
 
             @Override
