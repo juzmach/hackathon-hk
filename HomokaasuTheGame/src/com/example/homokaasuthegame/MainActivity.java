@@ -366,6 +366,8 @@ public class MainActivity extends BaseGameActivity {
                 @Override
                 public void onTimePassed(final TimerHandler pTimerHandler)
                 {
+                    if (enemies.size() == 0)
+                        return;
                     Enemy e = enemies.getFirst();
                     removeList.add(e);
                     enemies.remove(e); /* Must remove here because of race
