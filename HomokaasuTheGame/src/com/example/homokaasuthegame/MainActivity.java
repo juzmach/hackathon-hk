@@ -329,6 +329,15 @@ public class MainActivity extends BaseGameActivity {
         MainActivity.menuScene = new Scene();
         MainActivity.menuScene.setBackground(new Background(0,125,58));
 
+        loadMainScene();
+
+        endScene = new Scene();
+        endScene.setBackground(new Background(0, 125, 58));
+
+        createWalls();
+    }
+
+    private void loadMainScene() {
         MainActivity.mainScene = new Scene();
         MainActivity.mainScene.setBackground(new Background(0, 125, 58));
         physicsWorld = new PhysicsWorld(
@@ -336,11 +345,6 @@ public class MainActivity extends BaseGameActivity {
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
         physicsWorld.setContactListener(new PieContactListener(this));
-
-        endScene = new Scene();
-        endScene.setBackground(new Background(0, 125, 58));
-
-        createWalls();
     }
 
     private void createWalls() {
@@ -469,6 +473,9 @@ public class MainActivity extends BaseGameActivity {
                 new MenuButton.IAction() {
                     @Override
                     public void run() {
+                        gameoverTheme.stop();
+                        loadMainScene();
+                        populateMainScene();
                         mEngine.setScene(menuScene);
                         currentScene = SceneType.MENU;
                     }
@@ -508,7 +515,7 @@ public class MainActivity extends BaseGameActivity {
                 });
         menuScene.sortChildren();
     }
-    
+
     public int getScore() {
     	return this.score;
     }
