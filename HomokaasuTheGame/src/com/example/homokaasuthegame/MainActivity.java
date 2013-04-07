@@ -15,9 +15,6 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.menu.MenuScene;
-import org.andengine.entity.scene.menu.item.IMenuItem;
-import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -163,14 +160,10 @@ public class MainActivity extends BaseGameActivity {
                 loadResources();
                 loadScenes();
                 populateMainScene();
-                //splash.detachSelf();
                 splashScene.detachSelf();
                 populateMenuScene();
                 mEngine.setScene(menuScene);
                 currentScene = SceneType.MENU;
-                menuScene.detachSelf();
-                mEngine.setScene(mainScene);
-                currentScene = SceneType.MAIN;
             }
         }));
 
@@ -335,6 +328,7 @@ public class MainActivity extends BaseGameActivity {
 
         MainActivity.menuScene = new Scene();
         MainActivity.menuScene.setBackground(new Background(0,125,58));
+
         MainActivity.mainScene = new Scene();
         MainActivity.mainScene.setBackground(new Background(0, 125, 58));
         physicsWorld = new PhysicsWorld(
@@ -345,7 +339,7 @@ public class MainActivity extends BaseGameActivity {
 
         endScene = new Scene();
         endScene.setBackground(new Background(0, 125, 58));
-        
+
         createWalls();
     }
 
@@ -370,7 +364,8 @@ public class MainActivity extends BaseGameActivity {
                 {
                     Enemy e = enemies.getFirst();
                     removeList.add(e);
-                    enemies.remove(e);
+                    enemies.remove(e); /* Must remove here because of race
+                                        * condition */
                     if (enemies.size() > 0) {
                         paussi();
                     }
@@ -431,12 +426,12 @@ public class MainActivity extends BaseGameActivity {
         // Z-indexit kuntoon
         mainScene.sortChildren();
     }
-    
+
     public void populateEndScene() {
         Sprite ebg = new Sprite(0, 0,
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
-        
+
         endScene.attachChild(ebg);
         theme.stop();
         gameoverTheme.play();
@@ -445,7 +440,7 @@ public class MainActivity extends BaseGameActivity {
         Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
                 mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
         endScene.attachChild(gameOverText);
-        
+
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
             public void onUpdate(float pSecondsElapsed) {
@@ -464,21 +459,54 @@ public class MainActivity extends BaseGameActivity {
 			@Override
 			public void reset() {
 				// TODO Auto-generated method stub
-				
+
 			}
         });
+
+        new MenuButton(650f, 350f,
+                "menu_exit_button.png", this.getVertexBufferObjectManager(),
+                endScene,
+                new MenuButton.IAction() {
+                    @Override
+                    public void run() {
+                        mEngine.setScene(menuScene);
+                        currentScene = SceneType.MENU;
+                    }
+                });
 	}
-        
-	private void populateMenuScene(){
+
+	private void populateMenuScene() {
     	theme.play();
     	Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.menuScene.attachChild(bg);
-        
+
         ITextureRegion cloudTextureRegion = loadTexture("cloudbanner.png",350,171,0,0);
-        Sprite cloud = new Sprite(0,0,cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
+        Sprite cloud = new Sprite(190f, 0,
+                cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
         MainActivity.menuScene.attachChild(cloud);
+        new MenuButton(70f, 350f,
+                "menu_newgame_button.png", this.getVertexBufferObjectManager(),
+                menuScene,
+                new MenuButton.IAction() {
+                    @Override
+                    public void run() {
+                        mEngine.setScene(mainScene);
+                        currentScene = SceneType.MAIN;
+                    }
+                });
+        new MenuButton(650f, 350f,
+                "menu_exit_button.png", this.getVertexBufferObjectManager(),
+                menuScene,
+                new MenuButton.IAction() {
+                    @Override
+                    public void run() {
+                        mEngine.setScene(mainScene);
+                        System.exit(0);
+                    }
+                });
+        menuScene.sortChildren();
     }
     
     public int getScore() {
