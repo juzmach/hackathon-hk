@@ -24,6 +24,7 @@ public class Fly extends Enemy {
 		super(pX, pY, 0, WIDTH / 2, HEIGHT, textureRegion,
 		        vertexBufferObjectManager, 0.3f, 0.2f);
 	    this.animate(50);
+	    body.setFixedRotation(true);
 	}
 
 	public static void init(MainActivity activity) {
@@ -42,8 +43,11 @@ public class Fly extends Enemy {
 
         if (joint != null || AIDead) {
             AIDead = true;
+            body.setFixedRotation(false);
+            this.stopAnimation();
             return;
         }
+
         if (body.getPosition().x <= target.x) {
             this.setFlippedHorizontal(true);
             body.setLinearVelocity(0.4f + (0.5f - (float)Math.random()) * 5f,

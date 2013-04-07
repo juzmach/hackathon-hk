@@ -48,12 +48,13 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	final LinkedList<Enemy> removeList = new LinkedList<Enemy>();
-	int score;
 
 	private Pie pie;
 	Vector2 target;
 	private ITextureRegion backgroundTextureRegion;
 	boolean gameOver = false;
+	int score;
+	Text scoreText;
 
     static PhysicsWorld physicsWorld;
 
@@ -202,7 +203,8 @@ public class MainActivity extends BaseGameActivity {
 
         Fly f = new Fly(x, y, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(f);
-        f.setTarget(target);
+        Vector2 t = new Vector2((float)(target.x + Math.random() * 10f), target.y);
+        f.setTarget(t);
         enemies.add(f);
     }
 
@@ -345,13 +347,17 @@ public class MainActivity extends BaseGameActivity {
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
-        target = new Vector2(15, 10);
+        target = new Vector2(15, 13);
 
         pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 
         Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
+
+        scoreText = new Text(CAMERA_WIDTH - 100, 10, mFont,
+                "00000", this.getVertexBufferObjectManager());
+        MainActivity.mainScene.attachChild(scoreText);
 
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
@@ -362,8 +368,11 @@ public class MainActivity extends BaseGameActivity {
                     mainScene.unregisterTouchArea(e);
                     e.detachChildren();
                     e.detachSelf();
+                    score++;
                 }
                 removeList.clear();
+
+                scoreText.setText(String.valueOf(score));
             }
 
             @Override
