@@ -15,6 +15,9 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.menu.MenuScene;
+import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -44,6 +47,7 @@ public class MainActivity extends BaseGameActivity {
     //tunes
     private Music theme;
     private Music gameoverTheme;
+    private Music menuTheme;
 
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
@@ -64,6 +68,7 @@ public class MainActivity extends BaseGameActivity {
     /* Scenes */
     private Scene splashScene;
     static public Scene mainScene;
+    private Scene endScene;
     private static Scene menuScene;
 
     public static MainActivity mainActivity;
@@ -76,6 +81,7 @@ public class MainActivity extends BaseGameActivity {
         SPLASH,
         MAIN,
         MENU,
+        END,
         OPTIONS,
         WORLD_SELECTION,
         LEVEL_SELECTION,
@@ -181,8 +187,10 @@ public class MainActivity extends BaseGameActivity {
                 case SPLASH:
                     break;
                 case MAIN:
-                    System.exit(0);
-                    break;
+                	System.exit(0);
+                    //break;
+                case END:
+                	System.exit(0);
             }
         }
         return false;
@@ -230,6 +238,8 @@ public class MainActivity extends BaseGameActivity {
     public void gameOVer() {
         if (!gameOver)  {
             gameOver = true;
+            populateEndScene();
+            mEngine.setScene(endScene);
             theme.stop();
             gameoverTheme.play();
             Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
@@ -287,6 +297,9 @@ public class MainActivity extends BaseGameActivity {
             this.gameoverTheme = MusicFactory.createMusicFromAsset
             		(this.mEngine.getMusicManager(), this, "gameover.ogg");
             this.gameoverTheme.setLooping(false);
+            this.menuTheme = MusicFactory.createMusicFromAsset
+            		(this.mEngine.getMusicManager(), this, "menumusic.ogg");
+            this.menuTheme.setLooping(true);
     	} catch (final IOException e) {
     		Debug.e("Unable to load the tunes!", e);
     	}
@@ -330,6 +343,9 @@ public class MainActivity extends BaseGameActivity {
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
         physicsWorld.setContactListener(new PieContactListener(this));
 
+        endScene = new Scene();
+        endScene.setBackground(new Background(0, 125, 58));
+        
         createWalls();
     }
 
@@ -374,7 +390,7 @@ public class MainActivity extends BaseGameActivity {
         MainActivity.mainScene.attachChild(bg);
         target = new Vector2(15, 13);
 
-        pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
+        pie = new Pie(16f, 14.35f, this.getVertexBufferObjectManager());
 
         Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());
@@ -416,7 +432,44 @@ public class MainActivity extends BaseGameActivity {
         mainScene.sortChildren();
     }
     
-    private void populateMenuScene(){
+    public void populateEndScene() {
+        Sprite ebg = new Sprite(0, 0,
+                backgroundTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
+        
+        endScene.attachChild(ebg);
+        theme.stop();
+        gameoverTheme.play();
+        mEngine.setScene(endScene);
+        currentScene = SceneType.END;
+        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+                mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
+        endScene.attachChild(gameOverText);
+        
+        mainScene.registerUpdateHandler(new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                for (Enemy e : removeList) {
+                    enemies.remove(e);
+                    physicsWorld.destroyBody(e.body);
+                    mainScene.unregisterTouchArea(e);
+                    e.detachChildren();
+                    e.detachSelf();
+                }
+                removeList.clear();
+
+                scoreText.setText(String.valueOf(score));
+            }
+
+			@Override
+			public void reset() {
+				// TODO Auto-generated method stub
+				
+			}
+        });
+	}
+        
+	private void populateMenuScene(){
     	theme.play();
     	Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
