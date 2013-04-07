@@ -15,6 +15,9 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.menu.MenuScene;
+import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -65,6 +68,7 @@ public class MainActivity extends BaseGameActivity {
     private Scene splashScene;
     static public Scene mainScene;
     private Scene endScene;
+    private static MenuScene menuScene;
 
     public static MainActivity mainActivity;
 
@@ -142,7 +146,7 @@ public class MainActivity extends BaseGameActivity {
         initSplashScene();
 
 
-        pOnCreateSceneCallback.onCreateSceneFinished(MainActivity.mainScene);
+        pOnCreateSceneCallback.onCreateSceneFinished(MainActivity.menuScene);
     }
 
     @Override
@@ -160,6 +164,10 @@ public class MainActivity extends BaseGameActivity {
                 populateMainScene();
                 //splash.detachSelf();
                 splashScene.detachSelf();
+                populateMenuScene();
+                mEngine.setScene(menuScene);
+                currentScene = SceneType.MENU;
+                menuScene.detachSelf();
                 mEngine.setScene(mainScene);
                 currentScene = SceneType.MAIN;
             }
@@ -230,6 +238,12 @@ public class MainActivity extends BaseGameActivity {
             gameOver = true;
             populateEndScene();
             mEngine.setScene(endScene);
+            theme.stop();
+            gameoverTheme.play();
+            Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+                    mFont, "PELI OHI", this.getVertexBufferObjectManager());
+            gameOverText.setZIndex(100);
+            MainActivity.mainScene.attachChild(gameOverText);
         }
     }
 
@@ -269,6 +283,7 @@ public class MainActivity extends BaseGameActivity {
        Ant.init(this);
        Fly.init(this);
        Pie.init(this);
+       Paussi.init(this);
     }
 
     private void loadMfx() {
@@ -313,6 +328,8 @@ public class MainActivity extends BaseGameActivity {
         removeList.clear();
         score = 0;
 
+        MainActivity.menuScene = new Scene();
+        MainActivity.menuScene.setBackground(new Background(0,125,58));
         MainActivity.mainScene = new Scene();
         MainActivity.mainScene.setBackground(new Background(0, 125, 58));
         physicsWorld = new PhysicsWorld(
@@ -340,6 +357,22 @@ public class MainActivity extends BaseGameActivity {
         }
     }
 
+    public void paussi() {
+            getEngine().registerUpdateHandler(new TimerHandler(0.3f, new ITimerCallback()
+            {
+                @Override
+                public void onTimePassed(final TimerHandler pTimerHandler)
+                {
+                    Enemy e = enemies.getFirst();
+                    removeList.add(e);
+                    enemies.remove(e);
+                    if (enemies.size() > 0) {
+                        paussi();
+                    }
+                }
+            }));
+    }
+
 
 /* Populate Scenes ************************************************************/
 
@@ -356,11 +389,15 @@ public class MainActivity extends BaseGameActivity {
 
         Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());
+        text.setZIndex(100);
         MainActivity.mainScene.attachChild(text);
 
         scoreText = new Text(CAMERA_WIDTH - 100, 10, mFont,
                 "00000", this.getVertexBufferObjectManager());
+        scoreText.setZIndex(100);
         MainActivity.mainScene.attachChild(scoreText);
+
+        new Paussi(640f, -10f, this.getVertexBufferObjectManager());
 
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
@@ -377,6 +414,7 @@ public class MainActivity extends BaseGameActivity {
                 removeList.clear();
 
                 scoreText.setText(String.valueOf(score));
+                mainScene.sortChildren();
             }
 
             @Override
@@ -423,6 +461,18 @@ public class MainActivity extends BaseGameActivity {
 				
 			}
         });
+	}
+        
+	private void populateMenuScene(){
+    	theme.play();
+    	Sprite bg = new Sprite(0, 0,
+                backgroundTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
+        MainActivity.menuScene.attachChild(bg);
+        
+        ITextureRegion cloudTextureRegion = loadTexture("cloudbanner.png",350,171,0,0);
+        Sprite cloud = new Sprite(0,0,cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
+        MainActivity.menuScene.attachChild(cloud);
     }
 
 
