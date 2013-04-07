@@ -40,7 +40,7 @@ public class Enemy extends AnimatedSprite {
 			ITextureRegion pTextureRegion,
 			VertexBufferObjectManager vertexBufferObjectManager,
 			float bodyWScale, float bodyHScale) {
-		super(pX, pY, pWidth, pHeight, (ITiledTextureRegion)pTextureRegion,
+		super(-900, -900, pWidth, pHeight, (ITiledTextureRegion)pTextureRegion,
 				vertexBufferObjectManager);
 
 		bd.type = BodyType.DynamicBody;
