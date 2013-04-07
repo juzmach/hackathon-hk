@@ -40,7 +40,6 @@ public class MainActivity extends BaseGameActivity {
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
 	private ITextureRegion backgroundTextureRegion;
-	private ITextureRegion pieTextureRegion;
 
     static PhysicsWorld physicsWorld;
 
@@ -191,11 +190,11 @@ public class MainActivity extends BaseGameActivity {
 
        // width and height power of 2^x
        backgroundTextureRegion = loadTexture("bg.png", 1024, 600, 0, 0);
-       pieTextureRegion = loadTexture("pie.png", 500, 500, 0, 0);
 
        /* Call static initializers */
        Ant.init(this);
        Fly.init(this);
+       Pie.init(this);
     }
 
     /**
@@ -268,6 +267,7 @@ public class MainActivity extends BaseGameActivity {
 
         Ant a = new Ant(30, 10, false, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(a);
+        a.setWalkSpeed(new Vector2(-50.8f, 0f));
 
         Ant b = new Ant(5, 10, true, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(b);
@@ -275,8 +275,7 @@ public class MainActivity extends BaseGameActivity {
         Fly c = new Fly(5, 10, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(c);
 
-        new Pie(15f, 14.35f, 453f, 145f,
-        		pieTextureRegion, this.getVertexBufferObjectManager());
+        new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",

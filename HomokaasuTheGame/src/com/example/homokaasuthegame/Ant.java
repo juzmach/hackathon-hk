@@ -6,6 +6,8 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Ant extends Enemy{
     private static BitmapTextureAtlas textureAtlas;
 	private static ITextureRegion textureRegion;
@@ -26,5 +28,9 @@ public class Ant extends Enemy{
 		super(pX, pY, 0, 100f, 48f, textureRegion, vertexBufferObjectManager);
 		this.animate(100);
 		this.setFlippedHorizontal(flip);
+	}
+
+	public void setWalkSpeed(Vector2 velocity) {
+	    body.setLinearVelocity(velocity);
 	}
 }

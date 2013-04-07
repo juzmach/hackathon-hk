@@ -17,20 +17,26 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
  *
  */
 public class Pie extends Sprite {
+    private static final float WIDTH = 453;
+    private static final float HEIGHT = 145;
+    private static ITextureRegion pieTextureRegion;
 
-	public Pie(float pX, float pY, float pWidth, float pHeight,
-			ITextureRegion pTextureRegion,
-			VertexBufferObjectManager pVertexBufferObjectManager) {
-		super(pX, pY, pWidth, pHeight, pTextureRegion, pVertexBufferObjectManager);
+    static void init(MainActivity activity) {
+        pieTextureRegion = activity.loadTexture("pie.png", (int)WIDTH, (int)HEIGHT, 0, 0);
+    }
+
+	public Pie(float pX, float pY,
+	        VertexBufferObjectManager pVertexBufferObjectManager) {
+		super(pX, pY, 453f, 145f, pieTextureRegion, pVertexBufferObjectManager);
 
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
 		bd.position.set(pX, pY);
 
 		FixtureDef fd = new FixtureDef();
-		fd.isSensor = true;
+		//fd.isSensor = true;
 		Body body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
-		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);
+		        WIDTH / 2f, HEIGHT / 2f, WIDTH - 5f, HEIGHT -5f, bd.type, fd);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, false));
