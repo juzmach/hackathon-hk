@@ -195,6 +195,7 @@ public class MainActivity extends BaseGameActivity {
 
        /* Call static initializers */
        Ant.init(this);
+       Fly.init(this);
     }
 
     /**
@@ -270,6 +271,9 @@ public class MainActivity extends BaseGameActivity {
 
         Ant b = new Ant(5, 10, true, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(b);
+        
+        Fly c = new Fly(5, 10, this.getVertexBufferObjectManager());
+        mainScene.registerTouchArea(c);
 
         new Pie(15f, 14.35f, 453f, 145f,
         		pieTextureRegion, this.getVertexBufferObjectManager());
