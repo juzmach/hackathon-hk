@@ -29,7 +29,7 @@ public class Pie extends AnimatedSprite {
     private static ITextureRegion pieTextureRegion;
     private static MainActivity activity;
 
-    private int hp = 5;
+    private int hp = 50;
 
     static void init(MainActivity activity) {
         Pie.activity = activity;
@@ -65,7 +65,8 @@ public class Pie extends AnimatedSprite {
 	public boolean eat() {
 	    if (hp > 0) {
 	        hp--;
-	        this.animate(new long[] {0}, new int[] {5 - hp}, 0);
+	        this.animate(new long[] {0},
+	                new int[] {(int)Math.ceil(5 - (hp / 10f))}, 0);
 	        return true;
 	    } else {
 	        return false;
@@ -73,7 +74,7 @@ public class Pie extends AnimatedSprite {
 	}
 
 	float spawnTimer = 0;
-	float spawnInterval = 3;
+	float spawnInterval = 4;
 
 	@Override
     protected void onManagedUpdate(float pSecondsElapsed) {
@@ -83,13 +84,13 @@ public class Pie extends AnimatedSprite {
         if (spawnTimer > spawnInterval) {
             spawnTimer = 0;
             if (spawnInterval > 0.3f)
-                spawnInterval -= 0.1f;
+                spawnInterval -= 0.01f;
 
             float xSpawn = (Math.random() > 0.5f) ? 30f : 5f;
             if (Math.random() < 0.6f) {
                 activity.spawnAnt(xSpawn, 15);
             } else {
-
+                activity.spawnFly(xSpawn, 5);
             }
         }
     }

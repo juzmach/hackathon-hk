@@ -175,9 +175,25 @@ public class MainActivity extends BaseGameActivity {
 /* External game state methods ************************************************/
 
     public void spawnAnt(float x, float y) {
+        if (enemies.size() > 4) {
+            return;
+        }
+
         Ant a = new Ant(x, y, false, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(a);
         a.setTarget(target);
+        enemies.add(a);
+    }
+
+    public void spawnFly(float x, float y) {
+        if (enemies.size() > 4) {
+            return;
+        }
+
+        Fly f = new Fly(x, y, this.getVertexBufferObjectManager());
+        mainScene.registerTouchArea(f);
+        f.setTarget(target);
+        enemies.add(f);
     }
 
     public boolean eatPie() {
@@ -306,16 +322,6 @@ public class MainActivity extends BaseGameActivity {
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
         target = new Vector2(15, 10);
-
-
-
-        Ant b = new Ant(5, 15, true, this.getVertexBufferObjectManager());
-        mainScene.registerTouchArea(b);
-        b.setTarget(target);
-
-        Fly c = new Fly(5, 5, this.getVertexBufferObjectManager());
-        mainScene.registerTouchArea(c);
-        c.setTarget(target);
 
         pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 
