@@ -441,6 +441,7 @@ public class MainActivity extends BaseGameActivity {
         theme.stop();
         gameoverTheme.play();
         mEngine.setScene(endScene);
+        currentScene = SceneType.END;
         Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
                 mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
         endScene.attachChild(gameOverText);
