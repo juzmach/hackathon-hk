@@ -60,6 +60,8 @@ public class MainActivity extends BaseGameActivity {
     private Scene splashScene;
     static public Scene mainScene;
 
+    public static MainActivity mainActivity;
+
     /* Splash screen resources */
     Sprite splashSprite;
 
@@ -74,6 +76,10 @@ public class MainActivity extends BaseGameActivity {
         CONTROLLER
     }
     private SceneType currentScene = SceneType.SPLASH;
+
+    public MainActivity() {
+        mainActivity = this;
+    }
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -201,6 +207,13 @@ public class MainActivity extends BaseGameActivity {
             return pie.eat();
         }
         return false;
+    }
+
+    public void removeEnemy(Enemy e) {
+        enemies.remove(e);
+        physicsWorld.destroyBody(e.body);
+        e.detachChildren();
+        e.detachSelf();
     }
 
     /**

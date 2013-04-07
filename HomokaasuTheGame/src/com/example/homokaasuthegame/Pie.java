@@ -27,12 +27,10 @@ public class Pie extends AnimatedSprite {
     private static int SPR_ROWS    = 2;
 
     private static ITextureRegion pieTextureRegion;
-    private static MainActivity activity;
 
     private int hp = 50;
 
     static void init(MainActivity activity) {
-        Pie.activity = activity;
         BitmapTextureAtlas textureAtlas;
         textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
                 1500, 342, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -88,9 +86,9 @@ public class Pie extends AnimatedSprite {
 
             float xSpawn = (Math.random() > 0.5f) ? 30f : 5f;
             if (Math.random() < 0.6f) {
-                activity.spawnAnt(xSpawn, 15);
+                MainActivity.mainActivity.spawnAnt(xSpawn, 15);
             } else {
-                activity.spawnFly(xSpawn, 5);
+                MainActivity.mainActivity.spawnFly(xSpawn, 5);
             }
         }
     }
