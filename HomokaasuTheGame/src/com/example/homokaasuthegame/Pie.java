@@ -37,7 +37,7 @@ public class Pie extends Sprite {
 		FixtureDef fd = new FixtureDef();
 		//fd.isSensor = true;
 		Body body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
-		        WIDTH / 2f, HEIGHT, WIDTH - 4f, 80f, bd.type, fd);
+		        WIDTH / 2f, HEIGHT, WIDTH - 240f, 80f, bd.type, fd);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, false));

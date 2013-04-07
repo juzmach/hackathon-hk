@@ -15,6 +15,8 @@ public class Ant extends Enemy{
 	private static int SPR_COLUMN  = 2;
 	private static int SPR_ROWS    = 1;
 
+	private final Vector2 target = new Vector2();
+
 	public static void init(MainActivity activity) {
 	    textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
 	            200, 40, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -31,7 +33,22 @@ public class Ant extends Enemy{
 		this.setFlippedHorizontal(flip);
 	}
 
-	public void setWalkSpeed(Vector2 velocity) {
-	    body.setLinearVelocity(velocity);
+	@Override
+    protected void onManagedUpdate(float pSecondsElapsed) {
+	    super.onManagedUpdate(pSecondsElapsed);
+
+	    if (joint != null || body.getPosition().y < 15f)
+	        return;
+	    if (body.getPosition().x <= target.x) {
+	        this.setFlippedHorizontal(true);
+	        body.setLinearVelocity(0.7f, 0f);
+	    } else {
+	        this.setFlippedHorizontal(false);
+	        body.setLinearVelocity(-0.7f, 0f);
+	    }
+	}
+
+	public void setTarget(Vector2 target) {
+	    this.target.set(target);
 	}
 }

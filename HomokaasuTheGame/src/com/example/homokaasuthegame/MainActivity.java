@@ -232,7 +232,6 @@ public class MainActivity extends BaseGameActivity {
     }
 
     private void createWalls() {
-        // TODO Auto-generated method stub
         FixtureDef WALL_FIX = PhysicsFactory.createFixtureDef(0.0f, 0.5f, 0.2f);
 
         {
@@ -243,16 +242,6 @@ public class MainActivity extends BaseGameActivity {
                     BodyType.StaticBody, WALL_FIX);
             MainActivity.mainScene.attachChild(ground);
         }
-
-        /*{
-            Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 15, CAMERA_WIDTH,
-                    15, this.mEngine.getVertexBufferObjectManager());
-            ground.setColor(new org.andengine.util.color.Color(15, 50, 0));
-            ground.setPosition(0, 10.0f);
-            PhysicsFactory.createBoxBody(physicsWorld, ground,
-                    BodyType.StaticBody, WALL_FIX);
-            MainActivity.mainScene.attachChild(ground);
-        }*/
     }
 
 
@@ -264,19 +253,20 @@ public class MainActivity extends BaseGameActivity {
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
+        Vector2 target = new Vector2(15, 10);
 
-        Ant a = new Ant(30, 10, false, this.getVertexBufferObjectManager());
+        Ant a = new Ant(30, 15, false, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(a);
-        a.setWalkSpeed(new Vector2(-50.8f, 0f));
+        a.setTarget(target);
 
-        Ant b = new Ant(5, 10, true, this.getVertexBufferObjectManager());
+        Ant b = new Ant(5, 15, true, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(b);
-        
+        b.setTarget(target);
+
         Fly c = new Fly(5, 10, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(c);
 
         new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
-
 
         text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
