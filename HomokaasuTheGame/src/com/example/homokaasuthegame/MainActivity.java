@@ -64,6 +64,7 @@ public class MainActivity extends BaseGameActivity {
     /* Scenes */
     private Scene splashScene;
     static public Scene mainScene;
+    private static Scene menuScene;
 
     public static MainActivity mainActivity;
 
@@ -140,7 +141,7 @@ public class MainActivity extends BaseGameActivity {
         initSplashScene();
 
 
-        pOnCreateSceneCallback.onCreateSceneFinished(MainActivity.mainScene);
+        pOnCreateSceneCallback.onCreateSceneFinished(MainActivity.menuScene);
     }
 
     @Override
@@ -158,6 +159,10 @@ public class MainActivity extends BaseGameActivity {
                 populateMainScene();
                 //splash.detachSelf();
                 splashScene.detachSelf();
+                populateMenuScene();
+                mEngine.setScene(menuScene);
+                currentScene = SceneType.MENU;
+                menuScene.detachSelf();
                 mEngine.setScene(mainScene);
                 currentScene = SceneType.MAIN;
             }
@@ -313,6 +318,8 @@ public class MainActivity extends BaseGameActivity {
         removeList.clear();
         score = 0;
 
+        MainActivity.menuScene = new Scene();
+        MainActivity.menuScene.setBackground(new Background(0,125,58));
         MainActivity.mainScene = new Scene();
         MainActivity.mainScene.setBackground(new Background(0, 125, 58));
         physicsWorld = new PhysicsWorld(
@@ -384,6 +391,18 @@ public class MainActivity extends BaseGameActivity {
 
         // Z-indexit kuntoon
         mainScene.sortChildren();
+    }
+    
+    private void populateMenuScene(){
+    	theme.play();
+    	Sprite bg = new Sprite(0, 0,
+                backgroundTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
+        MainActivity.menuScene.attachChild(bg);
+        
+        ITextureRegion cloudTextureRegion = loadTexture("cloudbanner.png",350,171,0,0);
+        Sprite cloud = new Sprite(0,0,cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
+        MainActivity.menuScene.attachChild(cloud);
     }
 
 
