@@ -142,7 +142,7 @@ public class Enemy extends AnimatedSprite {
     }
 
 	private boolean shouldDie() {
-		return this.mX < -64 || this.mY > MainActivity.CAMERA_WIDTH + 64 || this.mY < -64;
+		return this.mX < -64 || this.mX > MainActivity.CAMERA_WIDTH + 64 || this.mY < -64;
 	}
 
 	@Override
