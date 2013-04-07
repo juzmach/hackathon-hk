@@ -1,9 +1,13 @@
 package com.example.homokaasuthegame;
 
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,19 +20,30 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
  * @author kviiri
  *
  */
-public class Pie extends Sprite {
+public class Pie extends AnimatedSprite {
     private static final float WIDTH = 453;
     private static final float HEIGHT = 145;
+    private static int SPR_COLUMN  = 3;
+    private static int SPR_ROWS    = 2;
+
     private static ITextureRegion pieTextureRegion;
 
+    private int hp = 5;
+
     static void init(MainActivity activity) {
-        pieTextureRegion = activity.loadTexture("pie.png",
-                (int)WIDTH, (int)HEIGHT, 0, 0);
+        BitmapTextureAtlas textureAtlas;
+        textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
+                1500, 342, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        pieTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(
+                textureAtlas, activity.getAssets(),
+                "pie_sprsheet.png", 0, 0, SPR_COLUMN, SPR_ROWS);
+        textureAtlas.load();
     }
 
 	public Pie(float pX, float pY,
 	        VertexBufferObjectManager pVertexBufferObjectManager) {
-		super(pX, pY, 453f, 145f, pieTextureRegion, pVertexBufferObjectManager);
+		super(pX, pY, 453f, 145f, (ITiledTextureRegion)pieTextureRegion,
+		        pVertexBufferObjectManager);
 
 		BodyDef bd = new BodyDef();
 		bd.type = BodyDef.BodyType.StaticBody;
@@ -43,6 +58,16 @@ public class Pie extends Sprite {
 		        new PhysicsConnector(this, body, true, false));
 		body.setTransform(pX, pY, 0);
 		MainActivity.mainScene.attachChild(this);
+	}
+
+	public boolean eat() {
+	    if (hp > 0) {
+	        hp--;
+	        this.animate(new long[] {0}, new int[] {5 - hp}, 0);
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
 
 }

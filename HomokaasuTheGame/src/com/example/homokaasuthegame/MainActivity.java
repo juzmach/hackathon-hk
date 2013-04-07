@@ -46,7 +46,9 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
+	private Pie pie;
 	private ITextureRegion backgroundTextureRegion;
+	boolean gameOver = false;
 
     static PhysicsWorld physicsWorld;
 
@@ -60,12 +62,11 @@ public class MainActivity extends BaseGameActivity {
     /* Splash screen resources */
     Sprite splashSprite;
 
-    private Text text;
-
     private enum SceneType
     {
         SPLASH,
         MAIN,
+        MENU,
         OPTIONS,
         WORLD_SELECTION,
         LEVEL_SELECTION,
@@ -170,6 +171,27 @@ public class MainActivity extends BaseGameActivity {
         return false;
     }
 
+/* External game state methods ***********************************************/
+
+    public boolean eatPie() {
+        if (pie != null) {
+            return pie.eat();
+        }
+        return false;
+    }
+
+    /**
+     * This is called if pie.eat() returns false
+     */
+    public void gameOVer() {
+        if (!gameOver)  {
+            gameOver = true;
+            Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+                    mFont, "PELI OHI", this.getVertexBufferObjectManager());
+            MainActivity.mainScene.attachChild(gameOverText);
+        }
+    }
+
 
 /* Load Resources *************************************************************/
 
@@ -248,6 +270,7 @@ public class MainActivity extends BaseGameActivity {
                 SensorManager.GRAVITY_EARTH), false);
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
+        physicsWorld.setContactListener(new PieContactListener(this));
 
         createWalls();
     }
@@ -288,9 +311,9 @@ public class MainActivity extends BaseGameActivity {
         Fly c = new Fly(5, 10, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(c);
 
-        new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
+        pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 
-        text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
+        Text text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
 

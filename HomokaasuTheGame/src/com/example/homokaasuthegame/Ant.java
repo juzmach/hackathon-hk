@@ -9,7 +9,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 
 public class Ant extends Enemy{
-    private static BitmapTextureAtlas textureAtlas;
 	private static ITextureRegion textureRegion;
 
 	private static int SPR_COLUMN  = 2;
@@ -18,9 +17,11 @@ public class Ant extends Enemy{
 	private final Vector2 target = new Vector2();
 
 	public static void init(MainActivity activity) {
+	    BitmapTextureAtlas textureAtlas;
 	    textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
 	            200, 40, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-	    textureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, activity.getAssets(),
+	    textureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(
+	            textureAtlas, activity.getAssets(),
 	            "ant_sprsheet.png", 0, 0, SPR_COLUMN, SPR_ROWS);
 	    textureAtlas.load();
 	}
