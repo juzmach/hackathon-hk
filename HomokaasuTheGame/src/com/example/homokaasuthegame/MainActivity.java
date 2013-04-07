@@ -465,7 +465,7 @@ public class MainActivity extends BaseGameActivity {
 
         new MenuButton(650f, 350f,
                 "menu_exit_button.png", this.getVertexBufferObjectManager(),
-                menuScene,
+                endScene,
                 new MenuButton.IAction() {
                     @Override
                     public void run() {
