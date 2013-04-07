@@ -29,6 +29,9 @@ public class PieContactListener implements ContactListener
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+        if (impulse.getNormalImpulses()[0] < 2.0f)
+            return;
+
         /* If body A was hit */
         if(contact.getFixtureA() != null)
         {
