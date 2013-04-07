@@ -53,6 +53,7 @@ public class Enemy extends AnimatedSprite {
 		body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
 		        pWidth / 2f, pHeight / 2f,
 		        pWidth * bodyWScale, pHeight * bodyHScale, bd.type, fd);
+		body.setUserData(this);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, true));

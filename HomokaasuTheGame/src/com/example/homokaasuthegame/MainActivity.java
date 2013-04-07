@@ -227,6 +227,7 @@ public class MainActivity extends BaseGameActivity {
                 SensorManager.GRAVITY_EARTH), false);
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
+        physicsWorld.setContactListener(new PieContactListener(this));
 
         createWalls();
     }
