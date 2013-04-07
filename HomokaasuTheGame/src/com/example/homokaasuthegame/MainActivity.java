@@ -360,6 +360,7 @@ public class MainActivity extends BaseGameActivity {
         }
     }
 
+    Sprite paussiSprite = null;
     public void paussi() {
             getEngine().registerUpdateHandler(new TimerHandler(0.3f, new ITimerCallback()
             {
@@ -368,10 +369,31 @@ public class MainActivity extends BaseGameActivity {
                 {
                     if (enemies.size() == 0)
                         return;
+
                     Enemy e = enemies.getFirst();
                     removeList.add(e);
                     enemies.remove(e); /* Must remove here because of race
                                         * condition */
+
+                    /* Pause Sprite */
+                    ITextureRegion powTextureRegion =
+                            MainActivity.mainActivity.loadTexture("pause.png",
+                            300, 218, 0, 0);
+                    paussiSprite = new Sprite(e.getX(), e.getY(),
+                            powTextureRegion,
+                            MainActivity.mainActivity.getEngine().getVertexBufferObjectManager());
+                    MainActivity.mainScene.attachChild(paussiSprite);
+
+                    MainActivity.mainActivity.getEngine().registerUpdateHandler(
+                            new TimerHandler(0.08f, new ITimerCallback() {
+                        @Override
+                        public void onTimePassed(final TimerHandler pTimerHandler) {
+                            if (paussiSprite == null)
+                                return;
+                            paussiSprite.detachSelf();
+                        }
+                    }));
+
                     if (enemies.size() > 0) {
                         paussi();
                     }

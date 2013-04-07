@@ -47,6 +47,7 @@ public class Paussi extends AnimatedSprite {
         case TouchEvent.ACTION_UP:
             if (!enabled)
                 return false;
+
             this.animate(new long[] {0}, new int[] {1}, 0);
             MainActivity.mainActivity.paussi();
             MainActivity.mainScene.unregisterTouchArea(this);
