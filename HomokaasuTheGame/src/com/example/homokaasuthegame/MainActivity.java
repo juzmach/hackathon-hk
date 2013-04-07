@@ -15,6 +15,9 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.menu.MenuScene;
+import org.andengine.entity.scene.menu.item.IMenuItem;
+import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -64,7 +67,7 @@ public class MainActivity extends BaseGameActivity {
     /* Scenes */
     private Scene splashScene;
     static public Scene mainScene;
-    private static Scene menuScene;
+    private static MenuScene menuScene;
 
     public static MainActivity mainActivity;
 
