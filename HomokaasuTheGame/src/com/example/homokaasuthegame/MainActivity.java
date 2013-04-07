@@ -368,7 +368,8 @@ public class MainActivity extends BaseGameActivity {
                     mainScene.unregisterTouchArea(e);
                     e.detachChildren();
                     e.detachSelf();
-                    score++;
+                    if (!gameOver)
+                        score++;
                 }
                 removeList.clear();
 
