@@ -25,7 +25,8 @@ public class Ant extends Enemy{
 
 	public Ant(float pX, float pY, boolean flip,
 	        VertexBufferObjectManager vertexBufferObjectManager) {
-		super(pX, pY, 0, 100f, 48f, textureRegion, vertexBufferObjectManager);
+		super(pX, pY, 0, 100f, 48f, textureRegion, vertexBufferObjectManager,
+		        1f, 1f);
 		this.animate(100);
 		this.setFlippedHorizontal(flip);
 	}

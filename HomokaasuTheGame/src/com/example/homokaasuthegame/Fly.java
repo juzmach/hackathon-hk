@@ -7,7 +7,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class Fly extends Enemy {
-	
+
     private static BitmapTextureAtlas textureAtlas;
 	private static ITextureRegion textureRegion;
 	//size of the image
@@ -15,12 +15,13 @@ public class Fly extends Enemy {
 	private static float WIDTH = 195;
 	private static int SPR_COLUMN = 2;
 	private static int SPR_ROWS = 1;
-	
+
 	public Fly(float pX, float pY, VertexBufferObjectManager vertexBufferObjectManager) {
-		super(pX, pY, 0, WIDTH / 2, HEIGHT, textureRegion, vertexBufferObjectManager);
+		super(pX, pY, 0, WIDTH / 2, HEIGHT, textureRegion,
+		        vertexBufferObjectManager, 0.3f, 0.2f);
 	    this.animate(50);
 	}
-	
+
 	public static void init(MainActivity activity) {
 	    textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
 	            (int) WIDTH, (int) HEIGHT, TextureOptions.BILINEAR_PREMULTIPLYALPHA);

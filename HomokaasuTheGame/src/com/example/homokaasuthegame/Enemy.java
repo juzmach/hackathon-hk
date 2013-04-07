@@ -38,7 +38,8 @@ public class Enemy extends AnimatedSprite {
 
 	public Enemy(float pX, float pY, float rot, float pWidth, float pHeight,
 			ITextureRegion pTextureRegion,
-			VertexBufferObjectManager vertexBufferObjectManager) {
+			VertexBufferObjectManager vertexBufferObjectManager,
+			float bodyWScale, float bodyHScale) {
 		super(pX, pY, pWidth, pHeight, (ITiledTextureRegion)pTextureRegion,
 				vertexBufferObjectManager);
 
@@ -50,7 +51,8 @@ public class Enemy extends AnimatedSprite {
 		fd.restitution = 0.01f;
 
 		body = PhysicsFactory.createBoxBody(MainActivity.physicsWorld,
-		        pWidth / 2f, pHeight / 2f, pWidth, pHeight, bd.type, fd);
+		        pWidth / 2f, pHeight / 2f,
+		        pWidth * bodyWScale, pHeight * bodyHScale, bd.type, fd);
 
 		MainActivity.physicsWorld.registerPhysicsConnector(
 		        new PhysicsConnector(this, body, true, true));
