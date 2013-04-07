@@ -45,6 +45,7 @@ public class MainActivity extends BaseGameActivity {
     private Music theme;
     private Music gameoverTheme;
     private Music menuTheme;
+    private Music pauseBlast;
 
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
@@ -293,6 +294,9 @@ public class MainActivity extends BaseGameActivity {
             this.menuTheme = MusicFactory.createMusicFromAsset
             		(this.mEngine.getMusicManager(), this, "menumusic.ogg");
             this.menuTheme.setLooping(true);
+            pauseBlast = MusicFactory.createMusicFromAsset
+            		(this.mEngine.getMusicManager(), this, "pauseblast.ogg");
+            pauseBlast.setLooping(false);
     	} catch (final IOException e) {
     		Debug.e("Unable to load the tunes!", e);
     	}
@@ -394,6 +398,7 @@ public class MainActivity extends BaseGameActivity {
                         }
                     }));
 
+                    pauseBlast.play();
                     if (enemies.size() > 0) {
                         paussi();
                     }
