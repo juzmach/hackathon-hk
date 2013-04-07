@@ -1,5 +1,9 @@
 package com.example.homokaasuthegame;
 
+import java.io.IOException;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
@@ -8,12 +12,14 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.debug.Debug;
 
 public class Paussi extends AnimatedSprite {
     private static int SPR_COLUMN  = 2;
     private static int SPR_ROWS    = 1;
 
     private static ITextureRegion textureRegion;
+    
     private boolean enabled = false;
 
     static void init(MainActivity activity) {
