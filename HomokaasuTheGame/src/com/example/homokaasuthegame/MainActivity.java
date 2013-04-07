@@ -160,14 +160,10 @@ public class MainActivity extends BaseGameActivity {
                 loadResources();
                 loadScenes();
                 populateMainScene();
-                //splash.detachSelf();
                 splashScene.detachSelf();
                 populateMenuScene();
                 mEngine.setScene(menuScene);
                 currentScene = SceneType.MENU;
-                //menuScene.detachSelf();
-                //mEngine.setScene(mainScene);
-                //currentScene = SceneType.MAIN;
             }
         }));
 
@@ -466,6 +462,17 @@ public class MainActivity extends BaseGameActivity {
 
 			}
         });
+
+        new MenuButton(650f, 350f,
+                "menu_exit_button.png", this.getVertexBufferObjectManager(),
+                menuScene,
+                new MenuButton.IAction() {
+                    @Override
+                    public void run() {
+                        mEngine.setScene(menuScene);
+                        currentScene = SceneType.MENU;
+                    }
+                });
 	}
 
 	private void populateMenuScene() {
