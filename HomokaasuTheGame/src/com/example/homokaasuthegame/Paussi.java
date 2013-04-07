@@ -7,6 +7,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class Paussi extends Sprite {
     private static ITextureRegion textureRegion;
+    private boolean enabled = false;
 
     static void init(MainActivity activity) {
         textureRegion = activity.loadTexture("pausebutton.png", 617, 617, 0, 0);
@@ -26,10 +27,14 @@ public class Paussi extends Sprite {
             final float touchAreaX, final float touchAreaY) {
         switch (pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_DOWN:
+            enabled = true;
             break;
         case TouchEvent.ACTION_MOVE:
             break;
         case TouchEvent.ACTION_UP:
+            if (!enabled)
+                return false;
+
             MainActivity.mainActivity.paussi();
             MainActivity.mainScene.unregisterTouchArea(this);
             this.detachSelf();
