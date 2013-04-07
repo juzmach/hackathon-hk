@@ -29,7 +29,7 @@ public class Pie extends AnimatedSprite {
 
     private static ITextureRegion pieTextureRegion;
 
-    private static final int maxHP = 100;
+    private static final int maxHP = 5;
     private int hp = maxHP;
 
     static void init(MainActivity activity) {
@@ -76,7 +76,7 @@ public class Pie extends AnimatedSprite {
 	    if (hp > 0) {
 	        hp--;
 	        this.animate(new long[] {0},
-	        		new int[] { hp == 0 ? 5 : 4 - (int)Math.floor((float)hp / maxHP * 4)}, 0);
+	        		new int[] { hp == 0 ? 5 : 5 - (int)Math.ceil((float)hp / maxHP * 5)}, 0);
 	        return true;
 	    } else {
 	        return false;

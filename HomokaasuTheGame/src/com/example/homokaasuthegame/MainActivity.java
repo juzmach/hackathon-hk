@@ -381,7 +381,6 @@ public class MainActivity extends BaseGameActivity {
 /* Populate Scenes ************************************************************/
 
     private void populateMainScene() {
-    	theme.play();
         /* Create background */
         Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
@@ -441,10 +440,18 @@ public class MainActivity extends BaseGameActivity {
         gameoverTheme.play();
         mEngine.setScene(endScene);
         currentScene = SceneType.END;
-        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+        Text gameOverText = new Text(CAMERA_WIDTH / 2 + 100, CAMERA_HEIGHT / 2 - 100,
                 mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
+        Text credits = new Text(CAMERA_WIDTH / 2 - 450, CAMERA_HEIGHT / 2 - 200,
+                mFont, "CREDITS:\n" +
+                		"Olli Vanhoja\n" +
+                		"Kalle Viiri\n" +
+                		"Juha Lindqvist\n" +
+                		"Juuso Stromberg\n" +
+                		"Sami Koskinen\n",this.getVertexBufferObjectManager());
+        credits.setScale(0.6f);
         endScene.attachChild(gameOverText);
-
+        endScene.attachChild(credits);
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
             public void onUpdate(float pSecondsElapsed) {
@@ -483,7 +490,7 @@ public class MainActivity extends BaseGameActivity {
 	}
 
 	private void populateMenuScene() {
-    	theme.play();
+    	menuTheme.play();
     	Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
@@ -499,6 +506,8 @@ public class MainActivity extends BaseGameActivity {
                 new MenuButton.IAction() {
                     @Override
                     public void run() {
+                    	menuTheme.stop();
+                    	theme.play();
                         mEngine.setScene(mainScene);
                         currentScene = SceneType.MAIN;
                     }
