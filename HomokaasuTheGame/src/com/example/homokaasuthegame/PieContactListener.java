@@ -70,7 +70,7 @@ public class PieContactListener implements ContactListener
             return;
         timerRunning = true;
 
-        activity.getEngine().registerUpdateHandler(new TimerHandler(3.0f, new ITimerCallback()
+        activity.getEngine().registerUpdateHandler(new TimerHandler(1.0f, new ITimerCallback()
         {
             @Override
             public void onTimePassed(final TimerHandler pTimerHandler)
