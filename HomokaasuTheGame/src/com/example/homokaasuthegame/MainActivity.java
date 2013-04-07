@@ -442,9 +442,18 @@ public class MainActivity extends BaseGameActivity {
         gameoverTheme.play();
         mEngine.setScene(endScene);
         currentScene = SceneType.END;
-        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+        Text gameOverText = new Text(CAMERA_WIDTH / 2 + 100, CAMERA_HEIGHT / 2 - 100,
                 mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
+        Text credits = new Text(CAMERA_WIDTH / 2 - 450, CAMERA_HEIGHT / 2 - 200,
+                mFont, "CREDITS:\n" +
+                		"Olli Vanhoja\n" +
+                		"Kalle Viiri\n" +
+                		"Juha Lindqvist\n" +
+                		"Juuso Stromberg\n" +
+                		"Sami Koskinen\n",this.getVertexBufferObjectManager());
+        credits.setScale(0.6f);
         endScene.attachChild(gameOverText);
+        endScene.attachChild(credits);
         
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
