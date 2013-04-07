@@ -28,7 +28,8 @@ public class Pie extends AnimatedSprite {
 
     private static ITextureRegion pieTextureRegion;
 
-    private int hp = 50;
+    private static final float maxHP = 30;
+    private float hp = maxHP;
 
     static void init(MainActivity activity) {
         BitmapTextureAtlas textureAtlas;
@@ -64,7 +65,7 @@ public class Pie extends AnimatedSprite {
 	    if (hp > 0) {
 	        hp--;
 	        this.animate(new long[] {0},
-	                new int[] {(int)Math.ceil(5 - (hp / 10f))}, 0);
+	                new int[] {(int)Math.ceil((maxHP - hp) / 10)}, 0);
 	        return true;
 	    } else {
 	        return false;
