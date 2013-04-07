@@ -59,6 +59,7 @@ public class MainActivity extends BaseGameActivity {
     {
         SPLASH,
         MAIN,
+        MENU,
         OPTIONS,
         WORLD_SELECTION,
         LEVEL_SELECTION,
