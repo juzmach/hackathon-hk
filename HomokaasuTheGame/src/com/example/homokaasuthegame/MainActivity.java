@@ -68,7 +68,7 @@ public class MainActivity extends BaseGameActivity {
     private Scene splashScene;
     static public Scene mainScene;
     private Scene endScene;
-    private static MenuScene menuScene;
+    private static Scene menuScene;
 
     public static MainActivity mainActivity;
 
