@@ -427,6 +427,10 @@ public class MainActivity extends BaseGameActivity {
         Sprite cloud = new Sprite(0,0,cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
         MainActivity.menuScene.attachChild(cloud);
     }
+    
+    public int getScore() {
+    	return this.score;
+    }
 
 
 /* Initialize Splash Screen ***************************************************/

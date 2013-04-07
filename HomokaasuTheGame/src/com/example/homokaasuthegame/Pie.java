@@ -9,6 +9,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.debug.Debug;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -62,6 +63,16 @@ public class Pie extends AnimatedSprite {
 	}
 
 	public boolean eat() {
+        int score = MainActivity.mainActivity.getScore(); 
+        if (score < 1) {
+        	spawnInterval = 4;
+        } else if (score < 27) {
+        	spawnInterval = 4f - magicNumber * (float) Math.log(score);
+        } else {
+        	spawnInterval = 1;
+        }
+        Debug.d("spawnInterval sai arvokseen " + spawnInterval);
+		
 	    if (hp > 0) {
 	        hp--;
 	        this.animate(new long[] {0},
@@ -74,12 +85,14 @@ public class Pie extends AnimatedSprite {
 
 	float spawnTimer = 0;
 	float spawnInterval = 4;
+	float magicNumber = 1f / (float) Math.log(3);
 
 	@Override
     protected void onManagedUpdate(float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
 
         spawnTimer += pSecondsElapsed;
+       
         if (spawnTimer > spawnInterval) {
             spawnTimer = 0;
             if (spawnInterval > 0.3f)
