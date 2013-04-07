@@ -162,9 +162,9 @@ public class MainActivity extends BaseGameActivity {
                 populateMenuScene();
                 mEngine.setScene(menuScene);
                 currentScene = SceneType.MENU;
-                menuScene.detachSelf();
-                mEngine.setScene(mainScene);
-                currentScene = SceneType.MAIN;
+                //menuScene.detachSelf();
+                //mEngine.setScene(mainScene);
+                //currentScene = SceneType.MAIN;
             }
         }));
 
@@ -322,6 +322,7 @@ public class MainActivity extends BaseGameActivity {
 
         MainActivity.menuScene = new Scene();
         MainActivity.menuScene.setBackground(new Background(0,125,58));
+
         MainActivity.mainScene = new Scene();
         MainActivity.mainScene.setBackground(new Background(0, 125, 58));
         physicsWorld = new PhysicsWorld(
@@ -354,7 +355,8 @@ public class MainActivity extends BaseGameActivity {
                 {
                     Enemy e = enemies.getFirst();
                     removeList.add(e);
-                    enemies.remove(e);
+                    enemies.remove(e); /* Must remove here because of race
+                                        * condition */
                     if (enemies.size() > 0) {
                         paussi();
                     }
@@ -415,17 +417,39 @@ public class MainActivity extends BaseGameActivity {
         // Z-indexit kuntoon
         mainScene.sortChildren();
     }
-    
+
     private void populateMenuScene(){
     	theme.play();
     	Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.menuScene.attachChild(bg);
-        
+
         ITextureRegion cloudTextureRegion = loadTexture("cloudbanner.png",350,171,0,0);
-        Sprite cloud = new Sprite(0,0,cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
+        Sprite cloud = new Sprite(190f, 0,
+                cloudTextureRegion,this.mEngine.getVertexBufferObjectManager());
         MainActivity.menuScene.attachChild(cloud);
+        new MenuButton(70f, 350f,
+                "menu_newgame_button.png", this.getVertexBufferObjectManager(),
+                menuScene,
+                new MenuButton.IAction() {
+                    @Override
+                    public void run() {
+                        mEngine.setScene(mainScene);
+                        currentScene = SceneType.MAIN;
+                    }
+                });
+        new MenuButton(70f, 350f,
+                "menu_exit_button.png", this.getVertexBufferObjectManager(),
+                menuScene,
+                new MenuButton.IAction() {
+                    @Override
+                    public void run() {
+                        mEngine.setScene(mainScene);
+                        System.exit(0);
+                    }
+                });
+        menuScene.sortChildren();
     }
 
 
