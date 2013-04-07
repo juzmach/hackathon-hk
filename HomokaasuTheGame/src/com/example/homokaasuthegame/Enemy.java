@@ -140,4 +140,21 @@ public class Enemy extends AnimatedSprite {
         }
         return true;
     }
+
+	private boolean shouldDie() {
+		return this.mX < -64 || this.mY > MainActivity.CAMERA_WIDTH + 64 || this.mY < -64; 
+	}
+	
+	@Override
+	protected void onManagedUpdate(final float pSecondsElapsed) {
+		super.onManagedUpdate(pSecondsElapsed);
+		if(shouldDie()) {
+			die();
+		}
+	}
+	
+	private void die() {
+		MainActivity.physicsWorld.destroyBody(hitBody);
+		this.detachSelf();
+	}
 }
