@@ -47,12 +47,13 @@ public class MainActivity extends BaseGameActivity {
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	final LinkedList<Enemy> removeList = new LinkedList<Enemy>();
-	int score;
 
 	private Pie pie;
 	Vector2 target;
 	private ITextureRegion backgroundTextureRegion;
 	boolean gameOver = false;
+	int score;
+	Text scoreText;
 
     static PhysicsWorld physicsWorld;
 
@@ -346,6 +347,10 @@ public class MainActivity extends BaseGameActivity {
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
 
+        scoreText = new Text(CAMERA_WIDTH - 100, 10, mFont,
+                "00000", this.getVertexBufferObjectManager());
+        MainActivity.mainScene.attachChild(scoreText);
+
         mainScene.registerUpdateHandler(new IUpdateHandler() {
             @Override
             public void onUpdate(float pSecondsElapsed) {
@@ -355,8 +360,11 @@ public class MainActivity extends BaseGameActivity {
                     mainScene.unregisterTouchArea(e);
                     e.detachChildren();
                     e.detachSelf();
+                    score++;
                 }
                 removeList.clear();
+
+                scoreText.setText(String.valueOf(score));
             }
 
             @Override
