@@ -44,6 +44,7 @@ public class MainActivity extends BaseGameActivity {
     //tunes
     private Music theme;
     private Music gameoverTheme;
+    private Music menuTheme;
 
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
@@ -64,6 +65,7 @@ public class MainActivity extends BaseGameActivity {
     /* Scenes */
     private Scene splashScene;
     static public Scene mainScene;
+    private Scene endScene;
     private static Scene menuScene;
 
     public static MainActivity mainActivity;
@@ -76,6 +78,7 @@ public class MainActivity extends BaseGameActivity {
         SPLASH,
         MAIN,
         MENU,
+        END,
         OPTIONS,
         WORLD_SELECTION,
         LEVEL_SELECTION,
@@ -181,8 +184,10 @@ public class MainActivity extends BaseGameActivity {
                 case SPLASH:
                     break;
                 case MAIN:
-                    System.exit(0);
-                    break;
+                	System.exit(0);
+                    //break;
+                case END:
+                	System.exit(0);
             }
         }
         return false;
@@ -230,6 +235,8 @@ public class MainActivity extends BaseGameActivity {
     public void gameOVer() {
         if (!gameOver)  {
             gameOver = true;
+            populateEndScene();
+            mEngine.setScene(endScene);
             theme.stop();
             gameoverTheme.play();
             Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
@@ -287,6 +294,9 @@ public class MainActivity extends BaseGameActivity {
             this.gameoverTheme = MusicFactory.createMusicFromAsset
             		(this.mEngine.getMusicManager(), this, "gameover.ogg");
             this.gameoverTheme.setLooping(false);
+            this.menuTheme = MusicFactory.createMusicFromAsset
+            		(this.mEngine.getMusicManager(), this, "menumusic.ogg");
+            this.menuTheme.setLooping(true);
     	} catch (final IOException e) {
     		Debug.e("Unable to load the tunes!", e);
     	}
@@ -330,6 +340,9 @@ public class MainActivity extends BaseGameActivity {
         MainActivity.mainScene.registerUpdateHandler(physicsWorld);
         mainScene.setTouchAreaBindingOnActionDownEnabled(true);
         physicsWorld.setContactListener(new PieContactListener(this));
+
+        endScene = new Scene();
+        endScene.setBackground(new Background(0, 125, 58));
 
         createWalls();
     }
@@ -418,7 +431,44 @@ public class MainActivity extends BaseGameActivity {
         mainScene.sortChildren();
     }
 
-    private void populateMenuScene(){
+    public void populateEndScene() {
+        Sprite ebg = new Sprite(0, 0,
+                backgroundTextureRegion,
+                this.mEngine.getVertexBufferObjectManager());
+
+        endScene.attachChild(ebg);
+        theme.stop();
+        gameoverTheme.play();
+        mEngine.setScene(endScene);
+        currentScene = SceneType.END;
+        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
+                mFont, "   PELI OHI\nPisteet: " + score, this.getVertexBufferObjectManager());
+        endScene.attachChild(gameOverText);
+
+        mainScene.registerUpdateHandler(new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                for (Enemy e : removeList) {
+                    enemies.remove(e);
+                    physicsWorld.destroyBody(e.body);
+                    mainScene.unregisterTouchArea(e);
+                    e.detachChildren();
+                    e.detachSelf();
+                }
+                removeList.clear();
+
+                scoreText.setText(String.valueOf(score));
+            }
+
+			@Override
+			public void reset() {
+				// TODO Auto-generated method stub
+
+			}
+        });
+	}
+
+	private void populateMenuScene() {
     	theme.play();
     	Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
@@ -439,7 +489,7 @@ public class MainActivity extends BaseGameActivity {
                         currentScene = SceneType.MAIN;
                     }
                 });
-        new MenuButton(70f, 350f,
+        new MenuButton(650f, 350f,
                 "menu_exit_button.png", this.getVertexBufferObjectManager(),
                 menuScene,
                 new MenuButton.IAction() {
