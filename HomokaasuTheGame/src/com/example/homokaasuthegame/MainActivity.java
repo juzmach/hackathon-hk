@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
@@ -44,7 +45,8 @@ public class MainActivity extends BaseGameActivity {
     private Music theme;
 
 	//List of enemies
-	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+	final LinkedList<Enemy> removeList = new LinkedList<Enemy>();
 
 	private Pie pie;
 	Vector2 target;
@@ -181,7 +183,7 @@ public class MainActivity extends BaseGameActivity {
 /* External game state methods ************************************************/
 
     public void spawnAnt(float x, float y) {
-        if (enemies.size() > 4) {
+        if (enemies.size() > 10) {
             return;
         }
 
@@ -192,7 +194,7 @@ public class MainActivity extends BaseGameActivity {
     }
 
     public void spawnFly(float x, float y) {
-        if (enemies.size() > 4) {
+        if (enemies.size() > 10) {
             return;
         }
 
@@ -210,10 +212,7 @@ public class MainActivity extends BaseGameActivity {
     }
 
     public void removeEnemy(Enemy e) {
-        enemies.remove(e);
-        physicsWorld.destroyBody(e.body);
-        e.detachChildren();
-        e.detachSelf();
+        removeList.add(e);
     }
 
     /**
@@ -341,6 +340,25 @@ public class MainActivity extends BaseGameActivity {
         Text text = new Text(CAMERA_WIDTH - 800, 10, mFont, "The Life of Pie",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
+
+        mainScene.registerUpdateHandler(new IUpdateHandler() {
+            @Override
+            public void onUpdate(float pSecondsElapsed) {
+                for (Enemy e : removeList) {
+                    enemies.remove(e);
+                    physicsWorld.destroyBody(e.body);
+                    mainScene.unregisterTouchArea(e);
+                    e.detachChildren();
+                    e.detachSelf();
+                }
+                removeList.clear();
+            }
+
+            @Override
+            public void reset() {
+                // TODO Auto-generated method stub
+
+            }});
 
         // Z-indexit kuntoon
         mainScene.sortChildren();

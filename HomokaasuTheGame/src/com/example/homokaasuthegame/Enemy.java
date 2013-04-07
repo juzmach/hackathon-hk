@@ -154,8 +154,6 @@ public class Enemy extends AnimatedSprite {
 	}
 
 	private void die() {
-	    //MainActivity.mainActivity.removeEnemy(this);
-		//MainActivity.physicsWorld.destroyBody(body);
-		//this.detachSelf();
+	    MainActivity.mainActivity.removeEnemy(this);
 	}
 }
