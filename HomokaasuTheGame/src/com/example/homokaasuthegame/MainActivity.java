@@ -43,6 +43,7 @@ public class MainActivity extends BaseGameActivity {
 
     //tunes
     private Music theme;
+    private Music gameoverTheme;
 
 	//List of enemies
 	final LinkedList<Enemy> enemies = new LinkedList<Enemy>();
@@ -223,6 +224,8 @@ public class MainActivity extends BaseGameActivity {
     public void gameOVer() {
         if (!gameOver)  {
             gameOver = true;
+            theme.stop();
+            gameoverTheme.play();
             Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200,
                     mFont, "PELI OHI", this.getVertexBufferObjectManager());
             MainActivity.mainScene.attachChild(gameOverText);
@@ -270,8 +273,12 @@ public class MainActivity extends BaseGameActivity {
     private void loadMfx() {
     	MusicFactory.setAssetBasePath("mfx/");
     	try {
-            this.theme = MusicFactory.createMusicFromAsset(this.mEngine.getMusicManager(), this, "themeofpie.ogg");
+            this.theme = MusicFactory.createMusicFromAsset(this.mEngine.getMusicManager(),
+            		this, "themeofpie.ogg");
             this.theme.setLooping(true);
+            this.gameoverTheme = MusicFactory.createMusicFromAsset
+            		(this.mEngine.getMusicManager(), this, "gameover.ogg");
+            this.gameoverTheme.setLooping(false);
     	} catch (final IOException e) {
     		Debug.e("Unable to load the tunes!", e);
     	}
