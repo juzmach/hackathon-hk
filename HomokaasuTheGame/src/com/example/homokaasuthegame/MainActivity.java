@@ -1,7 +1,5 @@
 package com.example.homokaasuthegame;
 
-import java.util.LinkedList;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -36,9 +34,7 @@ public class MainActivity extends BaseGameActivity {
     protected static final int CAMERA_WIDTH = 1024;
     protected static final int CAMERA_HEIGHT = 550;
 
-	//List of enemies
-	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
-
+	private Pie pie;
 	private ITextureRegion backgroundTextureRegion;
 
     static PhysicsWorld physicsWorld;
@@ -52,8 +48,6 @@ public class MainActivity extends BaseGameActivity {
 
     /* Splash screen resources */
     Sprite splashSprite;
-
-    private Text text;
 
     private enum SceneType
     {
@@ -159,6 +153,24 @@ public class MainActivity extends BaseGameActivity {
             }
         }
         return false;
+    }
+
+/* External game state methods ***********************************************/
+
+    public boolean eatPie() {
+        if (pie != null) {
+            return pie.eat();
+        }
+        return false;
+    }
+
+    /**
+     * This is called if pie.eat() returns false
+     */
+    public void gameOVer() {
+        Text gameOverText = new Text(CAMERA_WIDTH / 2 - 100, 200, mFont, "PELI OHI",
+                this.getVertexBufferObjectManager());
+        MainActivity.mainScene.attachChild(gameOverText);
     }
 
 
@@ -268,9 +280,9 @@ public class MainActivity extends BaseGameActivity {
         Fly c = new Fly(5, 10, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(c);
 
-        new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
+        pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 
-        text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
+        Text text = new Text(0, 0, mFont, "PIIRAKKA    PELI",
                 this.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(text);
 

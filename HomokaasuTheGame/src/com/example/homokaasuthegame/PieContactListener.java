@@ -77,6 +77,10 @@ public class PieContactListener implements ContactListener
             {
                 activity.getEngine().unregisterUpdateHandler(pTimerHandler);
                 timerRunning = false;
+                if (activity.eatPie() == false) {
+                    activity.gameOVer();
+                    Debug.log(DebugLevel.ALL, "Game over!");
+                }
 
                 Debug.log(DebugLevel.ALL, "Timer!");
             }

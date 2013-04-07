@@ -23,15 +23,17 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 public class Pie extends AnimatedSprite {
     private static final float WIDTH = 453;
     private static final float HEIGHT = 145;
-    private static int SPR_COLUMN  = 6;
-    private static int SPR_ROWS    = 1;
+    private static int SPR_COLUMN  = 3;
+    private static int SPR_ROWS    = 2;
 
     private static ITextureRegion pieTextureRegion;
+
+    private int hp = 5;
 
     static void init(MainActivity activity) {
         BitmapTextureAtlas textureAtlas;
         textureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
-                3000, 171, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+                1500, 342, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
         pieTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(
                 textureAtlas, activity.getAssets(),
                 "pie_sprsheet.png", 0, 0, SPR_COLUMN, SPR_ROWS);
@@ -56,7 +58,16 @@ public class Pie extends AnimatedSprite {
 		        new PhysicsConnector(this, body, true, false));
 		body.setTransform(pX, pY, 0);
 		MainActivity.mainScene.attachChild(this);
-		//this.animate(new long[] {0}, new int[] {0}, 0);
+	}
+
+	public boolean eat() {
+	    if (hp > 0) {
+	        hp--;
+	        this.animate(new long[] {0}, new int[] {5 - hp}, 0);
+	        return true;
+	    } else {
+	        return false;
+	    }
 	}
 
 }
