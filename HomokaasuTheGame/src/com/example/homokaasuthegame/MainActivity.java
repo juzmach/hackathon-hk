@@ -156,7 +156,7 @@ public class MainActivity extends BaseGameActivity {
         return false;
     }
 
-/* External game state methods ***********************************************/
+/* External game state methods ************************************************/
 
     public boolean eatPie() {
         if (pie != null) {
@@ -281,8 +281,9 @@ public class MainActivity extends BaseGameActivity {
         mainScene.registerTouchArea(b);
         b.setTarget(target);
 
-        Fly c = new Fly(5, 10, this.getVertexBufferObjectManager());
+        Fly c = new Fly(5, 5, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(c);
+        c.setTarget(target);
 
         pie = new Pie(15f, 14.35f, this.getVertexBufferObjectManager());
 

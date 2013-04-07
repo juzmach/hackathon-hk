@@ -6,6 +6,8 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class Fly extends Enemy {
 
     private static BitmapTextureAtlas textureAtlas;
@@ -15,6 +17,8 @@ public class Fly extends Enemy {
 	private static float WIDTH = 195;
 	private static int SPR_COLUMN = 2;
 	private static int SPR_ROWS = 1;
+
+	private final Vector2 target = new Vector2();
 
 	public Fly(float pX, float pY, VertexBufferObjectManager vertexBufferObjectManager) {
 		super(pX, pY, 0, WIDTH / 2, HEIGHT, textureRegion,
@@ -29,4 +33,25 @@ public class Fly extends Enemy {
 	            "fly_sprsheet.png", 0, 0, SPR_COLUMN, SPR_ROWS);
 	    textureAtlas.load();
 	}
+
+	@Override
+    protected void onManagedUpdate(float pSecondsElapsed) {
+        super.onManagedUpdate(pSecondsElapsed);
+
+        if (joint != null)
+            return;
+        if (body.getPosition().x <= target.x) {
+            this.setFlippedHorizontal(true);
+            body.setLinearVelocity(0.4f + (0.5f - (float)Math.random()) * 5f,
+                    (0.5f - (float)Math.random()) * 13f - 0.1f);
+        } else {
+            this.setFlippedHorizontal(false);
+            body.setLinearVelocity(-0.4f + (0.5f - (float)Math.random()) * 5f,
+                    (0.5f - (float)Math.random()) * 13f - 0.1f);
+        }
+    }
+
+    public void setTarget(Vector2 target) {
+        this.target.set(target);
+    }
 }
