@@ -29,7 +29,7 @@ public class Pie extends AnimatedSprite {
 
     private static ITextureRegion pieTextureRegion;
 
-    private static final int maxHP = 20;
+    private static final int maxHP = 5;
     private int hp = maxHP;
 
     static void init(MainActivity activity) {

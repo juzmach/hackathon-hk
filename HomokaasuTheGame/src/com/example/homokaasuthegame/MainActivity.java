@@ -377,7 +377,6 @@ public class MainActivity extends BaseGameActivity {
 /* Populate Scenes ************************************************************/
 
     private void populateMainScene() {
-    	theme.play();
         /* Create background */
         Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
@@ -476,7 +475,7 @@ public class MainActivity extends BaseGameActivity {
 	}
 
 	private void populateMenuScene() {
-    	theme.play();
+    	menuTheme.play();
     	Sprite bg = new Sprite(0, 0,
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
@@ -492,6 +491,8 @@ public class MainActivity extends BaseGameActivity {
                 new MenuButton.IAction() {
                     @Override
                     public void run() {
+                    	menuTheme.stop();
+                    	theme.play();
                         mEngine.setScene(mainScene);
                         currentScene = SceneType.MAIN;
                     }
