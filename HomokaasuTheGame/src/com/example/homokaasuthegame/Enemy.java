@@ -147,6 +147,7 @@ public class Enemy extends AnimatedSprite {
 	
 	@Override
 	protected void onManagedUpdate(final float pSecondsElapsed) {
+		super.onManagedUpdate(pSecondsElapsed);
 		if(shouldDie()) {
 			die();
 		}
