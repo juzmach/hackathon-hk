@@ -29,36 +29,33 @@ public class PieContactListener implements ContactListener
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-        /*if(impulse.getNormalImpulses()[0] > 0.01)
-        {*/
-            /* If body A was hit */
-            if(contact.getFixtureA() != null)
-            {
-                if (Pie.class.isInstance(contact.getFixtureA().getBody().getUserData())) {
-                    Pie pie = (Pie)contact.getFixtureA().getBody().getUserData();
-                    // Eval
-                    addTimer();
-                } else if (Enemy.class.isInstance(contact.getFixtureA().getBody().getUserData())) {
-                    Enemy enemy = (Enemy)contact.getFixtureA().getBody().getUserData();
-                    // Eval
-                    addTimer();
-                }
+        /* If body A was hit */
+        if(contact.getFixtureA() != null)
+        {
+            if (Pie.class.isInstance(contact.getFixtureA().getBody().getUserData())) {
+                Pie pie = (Pie)contact.getFixtureA().getBody().getUserData();
+                // Eval
+                addTimer();
+            } else if (Enemy.class.isInstance(contact.getFixtureA().getBody().getUserData())) {
+                Enemy enemy = (Enemy)contact.getFixtureA().getBody().getUserData();
+                // Eval
+                addTimer();
             }
+        }
 
-            /* If body B was hit */
-            if(contact.getFixtureB() != null)
-            {
-                if (Pie.class.isInstance(contact.getFixtureB().getBody().getUserData())) {
-                    Pie pie = (Pie)contact.getFixtureB().getBody().getUserData();
-                    // Eval
-                    addTimer();
-                } else if (Enemy.class.isInstance(contact.getFixtureB().getBody().getUserData())) {
-                    Enemy enemy = (Enemy)contact.getFixtureB().getBody().getUserData();
-                    // Eval
-                    addTimer();
-                }
+        /* If body B was hit */
+        if(contact.getFixtureB() != null)
+        {
+            if (Pie.class.isInstance(contact.getFixtureB().getBody().getUserData())) {
+                Pie pie = (Pie)contact.getFixtureB().getBody().getUserData();
+                // Eval
+                addTimer();
+            } else if (Enemy.class.isInstance(contact.getFixtureB().getBody().getUserData())) {
+                Enemy enemy = (Enemy)contact.getFixtureB().getBody().getUserData();
+                // Eval
+                addTimer();
             }
-        //}
+        }
     }
 
     @Override

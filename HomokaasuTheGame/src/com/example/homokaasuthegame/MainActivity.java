@@ -42,11 +42,12 @@ public class MainActivity extends BaseGameActivity {
 
     //tunes
     private Music theme;
-    
+
 	//List of enemies
 	LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 
 	private Pie pie;
+	Vector2 target;
 	private ITextureRegion backgroundTextureRegion;
 	boolean gameOver = false;
 
@@ -86,7 +87,7 @@ public class MainActivity extends BaseGameActivity {
                 mCamera);
         options.getAudioOptions().setNeedsMusic(true);
         options.getAudioOptions().setNeedsSound(true);
-        
+
 
         return options;
     }
@@ -173,6 +174,12 @@ public class MainActivity extends BaseGameActivity {
 
 /* External game state methods ************************************************/
 
+    public void spawnAnt(float x, float y) {
+        Ant a = new Ant(x, y, false, this.getVertexBufferObjectManager());
+        mainScene.registerTouchArea(a);
+        a.setTarget(target);
+    }
+
     public boolean eatPie() {
         if (pie != null) {
             return pie.eat();
@@ -229,7 +236,7 @@ public class MainActivity extends BaseGameActivity {
        Fly.init(this);
        Pie.init(this);
     }
-    
+
     private void loadMfx() {
     	MusicFactory.setAssetBasePath("mfx/");
     	try {
@@ -298,11 +305,9 @@ public class MainActivity extends BaseGameActivity {
                 backgroundTextureRegion,
                 this.mEngine.getVertexBufferObjectManager());
         MainActivity.mainScene.attachChild(bg);
-        Vector2 target = new Vector2(15, 10);
+        target = new Vector2(15, 10);
 
-        Ant a = new Ant(30, 15, false, this.getVertexBufferObjectManager());
-        mainScene.registerTouchArea(a);
-        a.setTarget(target);
+
 
         Ant b = new Ant(5, 15, true, this.getVertexBufferObjectManager());
         mainScene.registerTouchArea(b);
